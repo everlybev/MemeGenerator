@@ -395,6 +395,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       else if(backgroundImage[indexOfBrowsingMeme].contains(".gif")){
         readyForReturn = 1;
       }
+      else if(backgroundImage[indexOfBrowsingMeme].contains(".jpeg")){
+        readyForReturn = 1;
+      }
+      else if(backgroundImage[indexOfBrowsingMeme].contains(".JPEG")){
+        readyForReturn = 1;
+      }
       else if(backgroundImage[indexOfBrowsingMeme].contains(".GIF")){
         readyForReturn = 1;
       }
@@ -488,6 +494,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         readyForReturn = 1;
       }
       else if(backgroundImage[indexOfBrowsingPresteMeme].contains(".gif")){
+        readyForReturn = 1;
+      }
+      else if(backgroundImage[indexOfBrowsingPresteMeme].contains(".jpeg")){
+        readyForReturn = 1;
+      }
+      else if(backgroundImage[indexOfBrowsingPresteMeme].contains(".JPEG")){
         readyForReturn = 1;
       }
       else if(backgroundImage[indexOfBrowsingPresteMeme].contains(".JPG")){
@@ -725,7 +737,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
           try {
             readTheInstructionsFile();
           } catch (Exception doBetter) {
-            System.err.println("I can't open the instructions but only upload jpg, png, or gif.");
+            System.err.println("I can't open the instructions but only upload jpeg, jpg, png, or gif.");
           }
         }
       }
@@ -741,6 +753,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         return true;
       }
       else if(theFileName.contains(".png")){
+        return true;
+      }
+      else if(theFileName.contains(".jpeg")){
+        return true;
+      }
+      else if(theFileName.contains(".JPEG")){
         return true;
       }
       else if(theFileName.contains(".PNG")){
@@ -1087,8 +1105,19 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
                     ImageIO.write(image, "GIF", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "GIF"));
                     image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "GIF"));
                   } catch (Exception eZ) {
-                    System.err.println("Couldn't save this edit.  Be sure not to change the meme name mid meme. Please start over");
-                    previewing = previewing - 1;
+                    try {
+                      ImageIO.write(image, "JPEG", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "JPEG"));
+                      image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "JPEG"));
+                    
+                    } catch (Exception e9) {
+                      try {
+                        ImageIO.write(image, "jpeg", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "jpeg"));
+                        image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "jpeg"));
+                      } catch (Exception e99) {
+                        System.err.println("Couldn't save this edit.  Be sure not to change the meme name mid meme. Please start over");
+                        previewing = previewing - 1;
+                      }
+                    }
                   }
                 }
               }
