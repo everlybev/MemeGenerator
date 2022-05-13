@@ -169,6 +169,31 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     
   }
 
+  public void bat(){
+    //Updates github
+    ProcessBuilder processBuilder = new ProcessBuilder("meme.bat");
+    try {
+      Process process = processBuilder.start();
+      StringBuilder output = new StringBuilder();
+      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+      String line;
+      while ((line = reader.readLine()) != null) {
+          output.append(line + "\n");
+      }
+
+      int exitVal = process.waitFor();
+      if (exitVal == 0) {
+          System.out.println(output);
+          System.exit(0);
+      } else {
+          //abnormal...
+      }
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
   public void actionPerformedBrowse(){
     try {
       browsedFile = BrowseWindow("Doesnt matter", "browse");
@@ -199,6 +224,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   public void actionPerformedUpload(){
     try {
       UploadWindow();
+      bat();
     } catch (Exception bW) {
       System.out.println("I don't know why but you can't upload that");
     }
@@ -250,6 +276,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
  */
       readMeWriter.write("Not sure what github/s problem is with a blank folder but now the folder is never empty.");
       readMeWriter.close();
+      bat();
 
     } catch (IOException le) {
       System.err.println("One or both text files might not have been created.  Not a big deal though.");
@@ -970,6 +997,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       try {
         ImageIO.write(image, newMemeFileFormat, new File(newMemeFileName + "." + newMemeFileFormat));
         System.err.println("Submitted " + newMemeFileName + "." + newMemeFileFormat);
+        bat();
       } catch (IOException e) {
         System.err.println("There wass an issue submitting the meme.  Not sure why tho");
       }
@@ -1158,6 +1186,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         FileWriter readMeWriter = new FileWriter(tempMemeTemplateFolder + "filename.txt");
         readMeWriter.write("--");
         readMeWriter.close();
+        bat();
 
       } catch (IOException e) {
         System.err.println("One or both text files might not have been created.  Not a big deal tho.");
