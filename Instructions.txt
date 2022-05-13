@@ -1,0 +1,79 @@
+This is our meme instructions sheet.  This doc will show you how to use our generator.
+
+Couple quick notes:
+SERIOUSLY, DO NOT MESS WITH THE FILE STRUCTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+JPG and PNG are fully supported
+GIFs will lose their animation and be saved as a single frame.  If the GIF file is not animated then the generator will meme the image properly.
+You don't NEED Notepad.exe but it would be better if you did have it.
+The origin (0,0) of the picture is in the top left corner with +x pointing right and +y pointing down.
+
+
+Browse the Memes:
+This button cycles through each meme that was made.  It will display jpgs, gifs (including animated gifs), and pngs.
+Each click will display a different meme.
+  Delete This Meme:
+  If while browsing you see a meme you do not like click this button
+  Clicking this button will delete the meme
+
+Upload Your Own Meme Template:
+Clicking this button will display a file browser.  Navigate to the directory where the meme is and open it.
+The meme will be displayed to you and added to the templates folder.  You do not need to add it again unles you delete it.
+Don't try and be funny by uploading a non supported image.  Only upload an image (gif, jpg, png)
+
+Choose a Meme:
+Similarly to Browse the Memes, this button one by one cycles through templates in the templates folder.
+You use this to pick the template that you will be memeing.  
+  Delete this Template:
+  If while cycling through the templates you see a template you do not like then click this button
+  Clicking this button will delete the meme template from the templates folder
+
+Begin Building:
+You have (mostly) full control over the text in the image can go
+You have control over the color of the text
+You can freely change the font size
+There is a text box for each color in RGB.  You can type the ranges on the interval [0,255].  For example periwinkle's RGB would be R=204, G=204, and B=255
+You can start the text anywhere on the image as long as the x location is on the interval [0,width] and the y location is on the interval [0,height]
+You can specify the name of your new meme.  Please make the names unique.  Also please only enter the meme name once.  You can't change it mid build
+The caption will be whatever text you want.
+When entering values into the fields be sure to press enter
+When you entered all desired info into the fields click Save this Edit
+A preview of your edit will be displayed.  If you are done click submit.  If you like it and want to continue memeing that image then enter the desired information in the fields and then
+press Save this Edit.  If you do not like the edit then click Undo and reenter the information with the corrected details
+If you want to completely start over then click Restart Meme Building.
+  Restart Meme Building:
+  Resets the browsing indexes and meme choosing indexes
+  You must rebrowse to the template you want
+  The partially made meme is deleted so that you can start fresh
+  The meme building window is closed
+
+  Undo:
+  Undoes the most recent edit
+  Note that it only undoes the most recent edit.  You can not undo twice in a row.  Please click Restart Meme Building if you want to undo more than the most recent edit
+
+  Save this Edit:
+  This overlays the text on the image and saves your second most recent edit
+  The new edit is displayed for you to see before being permanately added to the image
+  If the template is an animated gif then text is saved on a random frame.  Each save afterwards will be on the static gif image
+
+  Submit:
+  Saves your most recent edit to the image and puts the completed meme in the same place as the other completed memes
+  Closes the meme building window
+
+  Instructions:
+  Brings up this handydandy document
+
+  Exit Window:
+  Closes the meme building window mid meme building
+  You will have to start the meme building process over again if you do click this
+
+  Preview your color:
+  Enter your RGB values in the appropriate fields
+  Press enter in this box to view the current font color
+  Feel free to try out different combinations
+  Updating the individual RGBs will auto update the preview
+
+Exit Program:
+Closes all windows and safely closes the program
+
+Open Instructionz:
+Also brings up this handydandy document
