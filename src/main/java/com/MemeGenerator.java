@@ -224,7 +224,6 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   public void actionPerformedUpload(){
     try {
       UploadWindow();
-      bat();
     } catch (Exception bW) {
       System.out.println("I don't know why but you can't upload that");
     }
