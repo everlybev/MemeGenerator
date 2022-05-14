@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 
@@ -55,6 +56,13 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int blue;
   int topX;
   int topY;
+  int redToggle = 0;
+  int greenToggle = 0;
+  int blueToggle = 0;
+  int xToggle = 0;
+  int yToggle = 0;
+  int fontToggle = 0;
+  int captionToggle = 0;
   int memeHeight;
   int memeWidth;
   int imageHeight;
@@ -63,6 +71,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int indexOfBrowsingPresteMeme;
   int screenWidth;
   int screenHeight;
+  int titleEntered = 0;
   File memeFile = new File(".");
   float fontSize;
   String mainDirectory = memeFile.getAbsolutePath();
@@ -838,7 +847,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent e){
       String input = sizeOfFont.getText();
       sizeOfFont.setBackground(Color.WHITE);
-      
+      if(fontToggle == 0){
+        sizeOfFont.setBackground(new ColorUIResource(204, 204, 255));
+        fontToggle = 1;
+      }
+      else{
+        sizeOfFont.setBackground(new ColorUIResource(54, 180, 251));
+        fontToggle = 0;
+      }
      try {
       fontSize = Float.parseFloat(input);
      } catch (Exception fonts) {
@@ -852,6 +868,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent f){
       memeText=caption.getText();
       caption.setBackground(Color.WHITE);
+      if(captionToggle == 0){
+        caption.setBackground(new ColorUIResource(204, 204, 255));
+        captionToggle = 1;
+      }
+      else{
+        caption.setBackground(new ColorUIResource(54, 180, 251));
+        captionToggle = 0;
+      }
     }
   });
 
@@ -871,6 +895,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         red = 4;
       }
       finally{
+        if(redToggle == 0){
+          redBox.setBackground(new ColorUIResource(204, 204, 255));
+          redToggle = 1;
+        }
+        else{
+          redBox.setBackground(new ColorUIResource(54, 180, 251));
+          redToggle = 0;
+        }
         try {
           colorPreviewLabel.setBackground(new Color(red, green, blue));
         } catch (Exception e) {
@@ -897,6 +929,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         green = 2;
       }
       finally{
+        if(greenToggle == 0){
+          greenBox.setBackground(new ColorUIResource(204, 204, 255));
+          greenToggle = 1;
+        }
+        else{
+          greenBox.setBackground(new ColorUIResource(54, 180, 251));
+          greenToggle = 0;
+        }
         try {
           colorPreviewLabel.setBackground(new Color(red, green, blue));
         } catch (Exception e) {
@@ -922,6 +962,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       blue = 0;
       }
       finally{
+        if(blueToggle == 0){
+          blueBox.setBackground(new ColorUIResource(204, 204, 255));
+          blueToggle = 1;
+        }
+        else{
+          blueBox.setBackground(new ColorUIResource(54, 180, 251));
+          blueToggle = 0;
+        }
         try {
           colorPreviewLabel.setBackground(new Color(red, green, blue));
         } catch (Exception e) {
@@ -942,7 +990,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent x){
       String XString = xBox.getText();
       xBox.setBackground(Color.WHITE);
-      
+      if(xToggle == 0){
+        xBox.setBackground(new ColorUIResource(204, 204, 255));
+        xToggle = 1;
+      }
+      else{
+        xBox.setBackground(new ColorUIResource(54, 180, 251));
+        xToggle = 0;
+      }
       try {
         topX = Integer.parseInt(XString);
       } catch (Exception e) {
@@ -961,6 +1016,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent y){
       String YString = yBox.getText();
       yBox.setBackground(Color.WHITE);
+      if(yToggle == 0){
+        yBox.setBackground(new ColorUIResource(204, 204, 255));
+        yToggle = 1;
+      }
+      else{
+        yBox.setBackground(new ColorUIResource(54, 180, 251));
+        yToggle = 0;
+      }
       try {
         topY = Integer.parseInt(YString);
       } catch (Exception e) {
@@ -978,8 +1041,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   // changed line 573 below from caption to Title.
   Title.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent t){
-      newMemeFileName = Title.getText();
-      Title.setBackground(Color.WHITE);
+      if(titleEntered == 0){
+        newMemeFileName = Title.getText();
+        Title.setBackground(Color.WHITE);
+        titleEntered = 1;
+      }
+      else{titleEntered = 1;}
     }
   });
   memeBuildingPanel.add(Title); //Each button/textbox needs to be added to the label
@@ -1011,6 +1078,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.drawString(memeText, topX, topY);
       g.dispose();
       previewing = 0;
+      titleEntered = 0;
       try {
         ImageIO.write(image, newMemeFileFormat, new File(newMemeFileName + "." + newMemeFileFormat));
         System.err.println("Submitted " + newMemeFileName + "." + newMemeFileFormat);
@@ -1202,6 +1270,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton closeWindow = new JButton("Exit Window");
   closeWindow.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
+      titleEntered = 0;
       //clear out t3mp directory
 
       File tempMemeToBeDeleted = new File(tempMemeTemplateFolder);
@@ -1227,6 +1296,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       previewing = 0;
       indexOfBrowsingMeme = 0;
       indexOfBrowsingPresteMeme = 0;
+      titleEntered = 0;
       red = 255;
       green = 255;
       blue = 255;
