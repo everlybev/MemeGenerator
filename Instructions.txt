@@ -3,7 +3,7 @@ ONLY SUPPORTED ON WINDOWS!!!
 
 Couple quick notes:
 SERIOUSLY, DO NOT MESS WITH THE FILE STRUCTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-JPG and PNG are fully supported
+JPEG JPG and PNG are fully supported
 GIFs will lose their animation and be saved as a single frame.  If the GIF file is not animated then the generator will meme the image properly.
 You don't NEED Notepad.exe but it would be better if you did have it.
 The origin (0,0) of the picture is in the top left corner with +x pointing right and +y pointing down.
