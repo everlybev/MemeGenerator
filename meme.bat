@@ -1,5 +1,5 @@
 @echo off
- cd /d D:\Users\dudeo\Documents\MemeGenerator
+ cd /d %`dp0
  git status
  git add .
  git commit -m "meme"
