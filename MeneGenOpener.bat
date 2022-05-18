@@ -1,3 +1,3 @@
 @echo off
- cd /d D:\Users\dudeo\Documents\MemeGenerator
+ cd /d %~dp0
  mvn compile exec:java
