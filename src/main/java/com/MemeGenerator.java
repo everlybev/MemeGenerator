@@ -1217,6 +1217,108 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   });
 
   
+  JButton smearButton=new JButton("Smear");
+  smearButton.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent f){
+      if(previewing == 0){
+        //Delete all files in t3mp if this is the first attemot of memeing
+      File tempMemeToBeDeleted = new File(tempMemeTemplateFolder);
+      try {
+        FileUtils.cleanDirectory(tempMemeToBeDeleted);
+      } catch (IOException e) {
+        System.err.println("Couldn't clean out the directory.  Might cause problems later on");
+      }
+      }
+      if(memeText == null){memeText = "";}
+      if(newMemeFileName == null){newMemeFileName = "default";}
+      if(newMemeFileFormat == null){newMemeFileFormat = "png";}
+      if(red > 255){red = 255;}
+      if(red < 0){red = 0;}
+      if(green > 255){green = 255;}
+      if(green < 0){green = 0;}
+      if(blue > 255){blue = 255;}
+      if(blue < 0){blue = 0;}
+      if(topX > memeWidth){topX = memeWidth / 2;}
+      if(topX < 0){topX = 1;}
+      if(topY > memeHeight){topY = memeHeight / 2;}
+      if(topY < 0){topY = 1;}
+      if(fontSize <= 1){fontSize = 1;}
+      System.out.println("the value of previewing is: " + previewing);
+      System.out.println("Your font size is: " + fontSize);
+      System.out.println("Your caption is: " + memeText);
+      System.out.println("Your color triplet (R,G,B) is: (" + red + ", " + green + ", " + blue + ") ");
+      System.out.println("Your text smear center (X, Y) is: (" + topX +  ", " + topY + ") ");
+      Graphics g = image.getGraphics();
+      g.setFont(g.getFont().deriveFont(fontSize));
+      Color fontColor = new Color(red, green, blue);
+      g.setColor(fontColor);
+      g.drawString(memeText, topX+4, topY);
+      g.setColor(fontColor);
+      g.drawString(memeText, topX-4, topY);
+      g.setColor(fontColor);
+      g.drawString(memeText, topX, topY+4);
+      g.setColor(fontColor);
+      g.drawString(memeText, topX, topY-4);
+      g.dispose();
+      previewing = previewing + 1;
+      try {
+        ImageIO.write(image, newMemeFileFormat, new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + newMemeFileFormat));
+        image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + newMemeFileFormat));
+      } catch (IOException e) {
+        try {
+          ImageIO.write(image, "png", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "png"));
+          image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "png"));
+        } catch (Exception e2) {
+          try {
+            ImageIO.write(image, "jpg", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "jpg"));
+            image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "jpg"));
+          } catch (IOException e1) {
+            try {
+              ImageIO.write(image, "JPG", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "JPG"));
+              image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "JPG"));
+            } catch (Exception e8) {
+              try {
+                ImageIO.write(image, "PNG", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "PNG"));
+                image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "PNG"));
+              } catch (Exception e12) {
+                try {
+                  ImageIO.write(image, "gif", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "gif"));
+                  image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "gif"));
+                } catch (Exception ex) {
+                  try {
+                    ImageIO.write(image, "GIF", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "GIF"));
+                    image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "GIF"));
+                  } catch (Exception eZ) {
+                    try {
+                      ImageIO.write(image, "JPEG", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "JPEG"));
+                      image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "JPEG"));
+                    
+                    } catch (Exception e9) {
+                      try {
+                        ImageIO.write(image, "jpeg", new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "jpeg"));
+                        image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + "jpeg"));
+                      } catch (Exception e99) {
+                        System.err.println("Smear failed.");
+                        previewing = previewing - 1;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      try {
+        BrowseWindow(tempMemeTemplateFolder, "preview");
+      } catch (IOException e) {
+        System.err.println("The edit was probably saved but viewing the latest edit failed.");
+      }
+      
+    }
+  });
+
+  
   JButton undo=new JButton("Undo");
   undo.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
@@ -1348,6 +1450,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   memeBuildingPanel.add(startFromScratch);
   memeBuildingPanel.add(closeWindow);
   memeBuildingPanel.add(colorPreviewLabel);
+  memeBuildingPanel.add(smearButton);
 
 
   memeBuildingFrame.getContentPane().setBackground(Color.BLUE);
@@ -1357,7 +1460,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   memeBuildingFrame.setVisible(true);
 
   //Set Locations
-  typingInstructions.setBounds(30,10,570,45);
+  typingInstructions.setBounds(30,10,571,45);
   redBoxLabel.setBounds(30,75,200,30);
   redBox.setBounds(220,75,175,30);
 
@@ -1385,7 +1488,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   captionLabel.setBounds(30,395,200,30);
   caption.setBounds(220,395,175,30);
 
-  undo.setBounds(55,435,150,30);
+  undo.setBounds(55,435,75,30);
+  smearButton.setBounds(131,435,75,30);
   save.setBounds(220,435,150,30);
   preview.setBounds(55,475,150,30);
   select.setBounds(220,475,150,30);
@@ -1398,6 +1502,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   select.setBorder(BorderFactory.createLineBorder(Color.black));
   startFromScratch.setBorder(BorderFactory.createLineBorder(Color.black));
   closeWindow.setBorder(BorderFactory.createLineBorder(Color.black));
+  smearButton.setBorder(BorderFactory.createLineBorder(Color.black));
 
   //I forgot public void was a thing so I said public int
   //We don't use this return but I dont feel like changing to void from int
