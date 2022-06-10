@@ -867,6 +867,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   caption.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
       memeText=caption.getText();
+
       caption.setBackground(Color.WHITE);
       if(captionToggle == 0){
         caption.setBackground(new ColorUIResource(204, 204, 255));
@@ -1043,6 +1044,41 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     public void actionPerformed(ActionEvent t){
       if(titleEntered == 0){
         newMemeFileName = Title.getText();
+
+        //want to check for illegal characters
+        if(newMemeFileName.contains("\\")){
+          newMemeFileName = newMemeFileName.replace("\\", "");
+        }
+        if(newMemeFileName.contains("/")){
+          newMemeFileName = newMemeFileName.replace("/", "");
+        }
+        if(newMemeFileName.contains("?")){
+          newMemeFileName = newMemeFileName.replace("?", "");
+        }
+        if(newMemeFileName.contains("/.")){
+          newMemeFileName = newMemeFileName.replace("/.", "");
+        }
+        if(newMemeFileName.contains(".")){
+          newMemeFileName = newMemeFileName.replace(".", "");
+        }
+        if(newMemeFileName.contains(":")){
+          newMemeFileName = newMemeFileName.replace(":", "");
+        }
+        if(newMemeFileName.contains("*")){
+          newMemeFileName = newMemeFileName.replace("*", "");
+        }
+        if(newMemeFileName.contains("\"")){
+          newMemeFileName = newMemeFileName.replace("\"", "");
+        }
+        if(newMemeFileName.contains("<")){
+          newMemeFileName = newMemeFileName.replace("<", "");
+        }
+        if(newMemeFileName.contains(">")){
+          newMemeFileName = newMemeFileName.replace(">", "");
+        }
+        if(newMemeFileName.contains("|")){
+          newMemeFileName = newMemeFileName.replace("|", "");
+        }
         Title.setBackground(Color.WHITE);
         titleEntered = 1;
       }
