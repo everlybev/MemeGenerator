@@ -71,6 +71,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int indexOfBrowsingPresteMeme;
   int screenWidth;
   int screenHeight;
+  int smearFactor;
   int titleEntered = 0;
   File memeFile = new File(".");
   float fontSize;
@@ -1278,7 +1279,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
       if(topY < 0){topY = 1;}
-      if(fontSize <= 1){fontSize = 1;}
+      if(fontSize <= 4){fontSize = 5;}
       System.out.println("the value of previewing is: " + previewing);
       System.out.println("Your font size is: " + fontSize);
       System.out.println("Your caption is: " + memeText);
@@ -1287,14 +1288,16 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       Graphics g = image.getGraphics();
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
+      if(fontSize <= 41){smearFactor = 3;}
+      else{smearFactor = 3;}
       g.setColor(fontColor);
-      g.drawString(memeText, topX+4, topY);
+      g.drawString(memeText, topX+smearFactor, topY);
       g.setColor(fontColor);
-      g.drawString(memeText, topX-4, topY);
+      g.drawString(memeText, topX-smearFactor, topY);
       g.setColor(fontColor);
-      g.drawString(memeText, topX, topY+4);
+      g.drawString(memeText, topX, topY+smearFactor);
       g.setColor(fontColor);
-      g.drawString(memeText, topX, topY-4);
+      g.drawString(memeText, topX, topY-smearFactor);
       g.dispose();
       previewing = previewing + 1;
       try {
