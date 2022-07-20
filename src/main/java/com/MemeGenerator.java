@@ -31,9 +31,11 @@ import org.apache.commons.io.FileUtils;
  */
 public class MemeGenerator extends javax.swing.JFrame implements ActionListener
 {
+  boolean itExists;
   transient BufferedImage image;
   transient BufferedImage browsingImage;
   double scale;
+  File tempFile;
   JButton browse;
   JButton browseDown;
   JButton upload;
@@ -77,6 +79,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int screenHeight;
   int smearFactor;
   int titleEntered = 0;
+  int numberOfOccurancez;
   File memeFile = new File(".");
   float fontSize;
   String mainDirectory = memeFile.getAbsolutePath();
@@ -1398,6 +1401,19 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.dispose();
       previewing = 0;
       titleEntered = 0;
+      //check if the same name exists already
+      File tempFile = new File(newMemeFileName + "." + newMemeFileFormat);
+      int numberOfOccurancez = 1;
+      boolean itExists = true;
+      while(itExists){
+        if(tempFile.exists()){
+          newMemeFileName = newMemeFileName + Integer.toString(numberOfOccurancez);
+          tempFile = new File(newMemeFileName + "." + newMemeFileFormat);
+        }
+        else{
+          itExists = false;
+        }
+      }
       try {
         ImageIO.write(image, newMemeFileFormat, new File(newMemeFileName + "." + newMemeFileFormat));
         System.err.println("Submitted " + newMemeFileName + "." + newMemeFileFormat);
