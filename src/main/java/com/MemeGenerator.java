@@ -1403,7 +1403,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       titleEntered = 0;
       //check if the same name exists already
       tempFile = new File(newMemeFileName + "." + newMemeFileFormat);
-      numberOfOccurancez = 1;
+      numberOfOccurancez = 0;
       itExists = true;
       while(itExists){
         if(tempFile.exists()){
@@ -1413,6 +1413,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         else{
           itExists = false;
         }
+      }
+      if(numberOfOccurancez > 0){
+        newMemeFileName = newMemeFileName + "_" + Integer.toString(numberOfOccurancez);
       }
       try {
         ImageIO.write(image, newMemeFileFormat, new File(newMemeFileName + "." + newMemeFileFormat));
