@@ -1402,13 +1402,13 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       previewing = 0;
       titleEntered = 0;
       //check if the same name exists already
-      File tempFile = new File(newMemeFileName + "." + newMemeFileFormat);
-      int numberOfOccurancez = 1;
-      boolean itExists = true;
+      tempFile = new File(newMemeFileName + "." + newMemeFileFormat);
+      numberOfOccurancez = 1;
+      itExists = true;
       while(itExists){
         if(tempFile.exists()){
-          newMemeFileName = newMemeFileName + Integer.toString(numberOfOccurancez);
-          tempFile = new File(newMemeFileName + "." + newMemeFileFormat);
+          tempFile = new File(newMemeFileName + "_" + Integer.toString(numberOfOccurancez) + "." + newMemeFileFormat);
+          numberOfOccurancez++;
         }
         else{
           itExists = false;
