@@ -38,6 +38,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton browseDown;
   JButton upload;
   JButton preset;
+  JButton presetDown;
   JButton buildMeme;
   JButton delete;
   JButton deleteTemplate;
@@ -64,6 +65,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int yToggle = 0;
   int fontToggle = 0;
   int captionToggle = 0;
+  int lastPressedBrowse = 3;
+  int lastPressedPreset = 3;
   int memeHeight;
   int memeWidth;
   int imageHeight;
@@ -106,7 +109,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     browse = new JButton("Browse-->");
     browseDown = new JButton("<--Browse");
     upload = new JButton("Upload Your Own Meme Template");
-    preset = new JButton("Choose a Meme");
+    preset = new JButton("Choose-->");
+    presetDown = new JButton("<--Choose");
     buildMeme = new JButton("Begin Building");
     delete = new JButton("Delete This Meme");
     deleteTemplate = new JButton("Delete This Template");
@@ -118,6 +122,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     browseDown.addActionListener(this);
     upload.addActionListener(this);
     preset.addActionListener(this);
+    presetDown.addActionListener(this);
     buildMeme.addActionListener(this);
     close.addActionListener(this);
     delete.addActionListener(this);
@@ -137,6 +142,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     memePanel.add(browseDown);
     memePanel.add(upload);
     memePanel.add(preset);
+    memePanel.add(presetDown);
     memePanel.add(buildMeme);
     memePanel.add(close);
     memePanel.add(delete);
@@ -158,10 +164,11 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     close.setBounds(255,60,150,30);
     upload.setBounds(10,120,215,30);
     deleteTemplate.setBounds(255,120,215,30);
-    preset.setBounds(75,180,150,30);
     buildMeme.setBounds(255,180,150,30);
     browse.setBounds(154,240,73,30);
     browseDown.setBounds(75,240,73,30);
+    preset.setBounds(154,180,73,30);
+    presetDown.setBounds(75,180,73,30);
     delete.setBounds(255,240,150,30);
     
 
@@ -170,6 +177,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     browseDown.setBorder(BorderFactory.createLineBorder(Color.black));
     upload.setBorder(BorderFactory.createLineBorder(Color.black));
     preset.setBorder(BorderFactory.createLineBorder(Color.black));
+    presetDown.setBorder(BorderFactory.createLineBorder(Color.black));
     buildMeme.setBorder(BorderFactory.createLineBorder(Color.black));
     close.setBorder(BorderFactory.createLineBorder(Color.black));
     delete.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -244,6 +252,19 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       try {
         indexOfBrowsingPresteMeme = 0;
         memeTemplate = BrowseWindow(blankMemeTemplateFolder, "preset");
+      } catch (Exception e) {
+        System.err.println("Please ensure you didn't delete all of the meme templates.  Upload a new template if you did");
+      }
+    }
+  }
+
+  public void actionPerformedPresetDown(){
+    try {
+      memeTemplate = BrowseWindow(blankMemeTemplateFolder, "presetDown");
+    } catch (Exception e1) {
+      try {
+        indexOfBrowsingPresteMeme = 0;
+        memeTemplate = BrowseWindow(blankMemeTemplateFolder, "presetDown");
       } catch (Exception e) {
         System.err.println("Please ensure you didn't delete all of the meme templates.  Upload a new template if you did");
       }
@@ -376,6 +397,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
      else if(e.getSource() == browseDown){actionPerformedBrowseDown();}
      //Do the preset meme method
     else if(e.getSource() == preset){actionPerformedPreset();}
+    //Do the preset<-- meme method
+   else if(e.getSource() == presetDown){actionPerformedPresetDown();}
     //Upload image
     else if(e.getSource() == upload){actionPerformedUpload();}
     //Do the build a meme method
@@ -407,6 +430,11 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public String BrowseWindowBrowse(){
+    if(lastPressedBrowse == 1){
+      indexOfBrowsingMeme++;
+      indexOfBrowsingMeme++;
+    }
+    lastPressedBrowse = 0;
     File file=new File(".");
     String directory = file.getAbsolutePath();
     File generatedMemesDirectory = new File(directory);
@@ -508,6 +536,11 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public String BrowseWindowBrowseBack(){
+    if(lastPressedBrowse == 0){
+      indexOfBrowsingMeme--;
+      indexOfBrowsingMeme--;
+    }
+    lastPressedBrowse = 1;
     File file=new File(".");
     String directory = file.getAbsolutePath();
     File generatedMemesDirectory = new File(directory);
@@ -609,6 +642,11 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public String BrowseWindowPreset(String path){
+    if(lastPressedPreset == 1){
+      indexOfBrowsingPresteMeme++;
+      indexOfBrowsingPresteMeme++;
+    }
+    lastPressedPreset = 0;
     String directory = path;
     File generatedMemesDirectory = new File(directory);
     String[] backgroundImage = generatedMemesDirectory.list();
@@ -718,10 +756,16 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public String BrowseWindowPresetDown(String path){
+    if(lastPressedPreset == 0){
+      indexOfBrowsingPresteMeme--;
+      indexOfBrowsingPresteMeme--;
+    }
+    lastPressedPreset = 1;
     String directory = path;
     File generatedMemesDirectory = new File(directory);
     String[] backgroundImage = generatedMemesDirectory.list();
     int readyForReturn = 0;
+    System.out.println(indexOfBrowsingPresteMeme);
     if(indexOfBrowsingPresteMeme < 0){
       
       indexOfBrowsingPresteMeme = backgroundImage.length - 1;
@@ -790,8 +834,13 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       
       pack();
       setVisible(true);
+      System.out.println(indexOfBrowsingPresteMeme);
+      if(indexOfBrowsingPresteMeme == -1){
+        indexOfBrowsingPresteMeme = backgroundImage.length;
+      }
+      System.out.println(indexOfBrowsingPresteMeme);
       indexOfBrowsingPresteMeme--;
-      return backgroundImage[indexOfBrowsingPresteMeme-1];
+      return backgroundImage[indexOfBrowsingPresteMeme+1];
       
     } catch (Exception e) {
       indexOfBrowsingPresteMeme = 0;
@@ -888,7 +937,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   public String BrowseWindow(String path, String option) throws IOException {
     if(option.equals("browse")){return BrowseWindowBrowse();}
     else if(option.equals("browseDown")){return BrowseWindowBrowseBack();}
-    //else if(option.equals("preset")){return BrowseWindowPresetDown(path);}
+    else if(option.equals("presetDown")){return BrowseWindowPresetDown(path);}
     else if(option.equals("preset")){return BrowseWindowPreset(path);}
     else if(option.equals("preview")){return BrowseWindowPreview(path);}
     else{return "else";}
