@@ -1407,15 +1407,15 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       itExists = true;
       while(itExists){
         if(tempFile.exists()){
-          tempFile = new File(newMemeFileName + "_" + Integer.toString(numberOfOccurancez) + "." + newMemeFileFormat);
           numberOfOccurancez++;
+          tempFile = new File(newMemeFileName + "_" + Integer.toString(numberOfOccurancez) + "." + newMemeFileFormat);
         }
         else{
           itExists = false;
         }
       }
       if(numberOfOccurancez > 0){
-        newMemeFileName = newMemeFileName + "_" + Integer.toString(numberOfOccurancez+1);
+        newMemeFileName = newMemeFileName + "_" + Integer.toString(numberOfOccurancez-1);
       }
       try {
         ImageIO.write(image, newMemeFileFormat, new File(newMemeFileName + "." + newMemeFileFormat));
