@@ -768,7 +768,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     File generatedMemesDirectory = new File(directory);
     String[] backgroundImage = generatedMemesDirectory.list();
     int readyForReturn = 0;
-    System.out.println(indexOfBrowsingPresteMeme);
+    //System.out.println(indexOfBrowsingPresteMeme);
     if(indexOfBrowsingPresteMeme < 0){
       
       indexOfBrowsingPresteMeme = backgroundImage.length - 1;
@@ -837,11 +837,11 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       
       pack();
       setVisible(true);
-      System.out.println(indexOfBrowsingPresteMeme);
+      //System.out.println(indexOfBrowsingPresteMeme);
       if(indexOfBrowsingPresteMeme == -1){
         indexOfBrowsingPresteMeme = backgroundImage.length;
       }
-      System.out.println(indexOfBrowsingPresteMeme);
+      //System.out.println(indexOfBrowsingPresteMeme);
       indexOfBrowsingPresteMeme--;
       return backgroundImage[indexOfBrowsingPresteMeme+1];
       
