@@ -637,7 +637,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       pack();
       setVisible(true);
       indexOfBrowsingMeme--;
-      return backgroundImage[indexOfBrowsingMeme-1];
+      return backgroundImage[indexOfBrowsingMeme+1];
       
     } catch (Exception e) {
       indexOfBrowsingMeme = 6;
