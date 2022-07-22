@@ -49,6 +49,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton theInstructions;
   JFrame preMeme;
   JLabel welcomeLabel;
+  JLabel memesMadeLabel;
+  JLabel templatesLabel;
   JLabel widthLabel;
   JLabel heightLabel;
   JTextField colorPreviewLabel = new JTextField("Preview your color");
@@ -80,6 +82,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int smearFactor;
   int titleEntered = 0;
   int numberOfOccurancez;
+  int numberOfMemesMade = 0;
+  int numberOfMemesTemplates = 880;
+  int numberOfImages = 0;
   File memeFile = new File(".");
   float fontSize;
   String mainDirectory = memeFile.getAbsolutePath();
@@ -134,6 +139,10 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
 
     welcomeLabel = new JLabel("Please Select from the Following Options Below:");
     welcomeLabel.setFont(new Font("ARIAL", Font.PLAIN, 17));
+    memesMadeLabel = new JLabel("Memes: " + Integer.toString(countTheImages(mainDirectory)));
+    memesMadeLabel.setFont(new Font("ARIAL", Font.PLAIN, 16));
+    templatesLabel = new JLabel("Templates: " + Integer.toString(countTheImages(blankMemeTemplateFolder)));
+    templatesLabel.setFont(new Font("ARIAL", Font.PLAIN, 16));
     
 
 
@@ -141,6 +150,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
 
     memePanel.setLayout(null);
     memePanel.add(welcomeLabel);
+    memePanel.add(memesMadeLabel);
+    memePanel.add(templatesLabel);
     memePanel.add(browse);
     memePanel.add(browseDown);
     memePanel.add(upload);
@@ -170,8 +181,10 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     buildMeme.setBounds(255,180,150,30);
     browse.setBounds(154,240,73,30);
     browseDown.setBounds(75,240,73,30);
+    memesMadeLabel.setBounds(80,210,150,30);
     preset.setBounds(154,180,73,30);
     presetDown.setBounds(75,180,73,30);
+    templatesLabel.setBounds(80,150,150,30);
     delete.setBounds(255,240,150,30);
     
 
@@ -278,6 +291,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     try {
       UploadWindow();
       bat();
+      numberOfMemesTemplates = countTheImages(blankMemeTemplateFolder);
+      System.out.println(numberOfMemesTemplates);
     } catch (Exception bW) {
       System.out.println("I don't know why but you can't upload that");
     }
@@ -287,6 +302,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     try {
       if((isAnImage(memeTemplate))){createTheMeme(memeTemplate);}
       else{System.err.println("Cycle through the templates first");}
+      numberOfMemesMade = countTheImages(mainDirectory);
+      System.out.println(numberOfMemesMade);
     } catch (Exception e1) {
       System.err.println("Something unexpected happened during the meme building");
       try {
@@ -343,6 +360,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     try {
      Files.delete(Paths.get(mainDirectory).resolve(browsedFile));
      System.out.println("Deleted file is: " + browsedFile);
+     numberOfMemesMade = countTheImages(mainDirectory);
+     System.out.println(numberOfMemesMade);
    } catch (IOException e1) {
      try {
        File deletedFile = new File(mainDirectory + "\\" + browsedFile);
@@ -365,6 +384,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
      //Path thePath
      Files.delete(Paths.get(mainDirectory, "Blank-Templates").resolve(memeTemplate));
      System.out.println("Deleted file iz: " + memeTemplate);
+     numberOfMemesTemplates = countTheImages(blankMemeTemplateFolder);
+     System.out.println(numberOfMemesTemplates);
    } catch (IOException e1) {
      try {
        File deletedFile = new File(blankMemeTemplateFolder + "\\" + memeTemplate);
@@ -1090,6 +1111,19 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     instructionsDotText.start();
   }
 
+  public int countTheImages(String aFolderWithImages){
+    numberOfImages = 0;
+    File theDirectory = new File(aFolderWithImages);
+    String[] backgroundImages = theDirectory.list();
+    for(int i=0; i<backgroundImages.length; i++){
+      if(isAnImage(backgroundImages[i])){
+        numberOfImages = numberOfImages + 1;
+      }
+    }
+
+    return numberOfImages;
+  }
+
    //Yeah not really sure how to go from 112 to 15
    public int createTheMeme(String rawMeme) throws IOException{
     red = 204;
@@ -1420,6 +1454,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       try {
         ImageIO.write(image, newMemeFileFormat, new File(newMemeFileName + "." + newMemeFileFormat));
         System.err.println("Submitted " + newMemeFileName + "." + newMemeFileFormat);
+        numberOfMemesMade = countTheImages(mainDirectory);
+        System.out.println(numberOfMemesMade);
       } catch (IOException e) {
         System.err.println("There wass an issue submitting the meme.  Not sure why tho");
       }
