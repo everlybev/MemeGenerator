@@ -304,6 +304,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       else{System.err.println("Cycle through the templates first");}
       numberOfMemesMade = countTheImages(mainDirectory);
       System.out.println(numberOfMemesMade);
+      memesMadeLabel.setText("Memes: " + Integer.toString(countTheImages(mainDirectory)));
     } catch (Exception e1) {
       System.err.println("Something unexpected happened during the meme building");
       try {
