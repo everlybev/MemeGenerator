@@ -292,7 +292,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       UploadWindow();
       bat();
       numberOfMemesTemplates = countTheImages(blankMemeTemplateFolder);
-      System.out.println(numberOfMemesTemplates);
+      templatesLabel.setText("Templates: " + Integer.toString(countTheImages(blankMemeTemplateFolder)));
     } catch (Exception bW) {
       System.out.println("I don't know why but you can't upload that");
     }
@@ -303,7 +303,6 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if((isAnImage(memeTemplate))){createTheMeme(memeTemplate);}
       else{System.err.println("Cycle through the templates first");}
       numberOfMemesMade = countTheImages(mainDirectory);
-      System.out.println(numberOfMemesMade);
       memesMadeLabel.setText("Memes: " + Integer.toString(countTheImages(mainDirectory)));
     } catch (Exception e1) {
       System.err.println("Something unexpected happened during the meme building");
@@ -362,7 +361,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
      Files.delete(Paths.get(mainDirectory).resolve(browsedFile));
      System.out.println("Deleted file is: " + browsedFile);
      numberOfMemesMade = countTheImages(mainDirectory);
-     System.out.println(numberOfMemesMade);
+     memesMadeLabel.setText("Memes: " + Integer.toString(countTheImages(mainDirectory)));
    } catch (IOException e1) {
      try {
        File deletedFile = new File(mainDirectory + "\\" + browsedFile);
@@ -386,7 +385,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
      Files.delete(Paths.get(mainDirectory, "Blank-Templates").resolve(memeTemplate));
      System.out.println("Deleted file iz: " + memeTemplate);
      numberOfMemesTemplates = countTheImages(blankMemeTemplateFolder);
-     System.out.println(numberOfMemesTemplates);
+     templatesLabel.setText("Templates: " + Integer.toString(countTheImages(blankMemeTemplateFolder)));
    } catch (IOException e1) {
      try {
        File deletedFile = new File(blankMemeTemplateFolder + "\\" + memeTemplate);
@@ -1456,7 +1455,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         ImageIO.write(image, newMemeFileFormat, new File(newMemeFileName + "." + newMemeFileFormat));
         System.err.println("Submitted " + newMemeFileName + "." + newMemeFileFormat);
         numberOfMemesMade = countTheImages(mainDirectory);
-        System.out.println(numberOfMemesMade);
+        memesMadeLabel.setText("Memes: " + Integer.toString(countTheImages(mainDirectory)));
       } catch (IOException e) {
         System.err.println("There wass an issue submitting the meme.  Not sure why tho");
       }
