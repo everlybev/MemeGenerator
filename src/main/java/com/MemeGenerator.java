@@ -980,6 +980,17 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
    }
  }
 
+ public int CalculateSmearFactor(){
+  smearFactor = 4;
+  if(fontSize <= 41){smearFactor = 3;}
+  else if(fontSize>41){
+    smearFactor = (int) (fontSize / 10);
+    if(fontSize>100){smearFactor = smearFactor - 1;}
+  }
+  else{smearFactor = 3;}
+  return smearFactor;
+ }
+
   public void UploadWindow() {
     //Store current working directory of project
     File workingDirectory = new File("");
@@ -1590,7 +1601,6 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     }
   });
 
-  
   JButton smearButton=new JButton("Smear");
   smearButton.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
@@ -1625,8 +1635,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       Graphics g = image.getGraphics();
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
-      if(fontSize <= 41){smearFactor = 3;}
-      else{smearFactor = 3;}
+      smearFactor = CalculateSmearFactor();
       g.setColor(fontColor);
       g.drawString(memeText, topX+smearFactor, topY);
       g.setColor(fontColor);
@@ -1635,6 +1644,17 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.drawString(memeText, topX, topY+smearFactor);
       g.setColor(fontColor);
       g.drawString(memeText, topX, topY-smearFactor);
+      if(fontSize > 20){
+        //If it is significantly big get the diagonnals
+      g.setColor(fontColor);
+      g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(45))), (int)(topY+smearFactor*java.lang.Math.cos(45)));
+      g.setColor(fontColor);
+      g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(45))), (int)(topY+smearFactor*java.lang.Math.cos(45)));
+      g.setColor(fontColor);
+      g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(45))), (int)(topY-smearFactor*java.lang.Math.cos(45)));
+      g.setColor(fontColor);
+      g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(45))), (int)(topY-smearFactor*java.lang.Math.cos(45)));
+      }
       g.dispose();
       previewing = previewing + 1;
       try {
