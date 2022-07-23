@@ -1637,11 +1637,15 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       System.out.println("Your font size is: " + fontSize);
       System.out.println("Your caption is: " + memeText);
       System.out.println("Your color triplet (R,G,B) is: (" + red + ", " + green + ", " + blue + ") ");
-      System.out.println("Your text smear center (X, Y) is: (" + topX +  ", " + topY + ") ");
       Graphics g = image.getGraphics();
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
       smearFactor = CalculateSmearFactor();
+      //make sure x and y are not too close to the edge
+      if(topX <= smearFactor){topX = smearFactor + 5;}
+      if(topY <= smearFactor){topY = smearFactor + 5;}
+      if(topX >= memeWidth - smearFactor){topX = memeWidth - smearFactor - 5;}
+      if(topY >= memeHeight - smearFactor){topY = memeHeight - smearFactor - 5;}
       g.setColor(fontColor);
       g.drawString(memeText, topX+smearFactor, topY);
       g.setColor(fontColor);
@@ -1662,6 +1666,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(45))), (int)(topY-smearFactor*java.lang.Math.cos(45)));
       }
       g.dispose();
+      System.out.println("Your text smear center (X, Y) is: (" + topX +  ", " + topY + ") ");
       previewing = previewing + 1;
       try {
         ImageIO.write(image, newMemeFileFormat, new File(tempMemeTemplateFolder + newMemeFileName + String.valueOf(previewing) + "." + newMemeFileFormat));
