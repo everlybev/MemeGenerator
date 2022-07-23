@@ -290,9 +290,11 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   public void actionPerformedUpload(){
     try {
       UploadWindow();
+      System.out.println("Please wait.  Uploading to github could take some moments");
       bat();
       numberOfMemesTemplates = countTheImages(blankMemeTemplateFolder);
       templatesLabel.setText("Templates: " + Integer.toString(countTheImages(blankMemeTemplateFolder)));
+      System.out.println("Finished github update.");
     } catch (Exception bW) {
       System.out.println("I don't know why but you can't upload that");
     }
@@ -346,7 +348,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
  */
       readMeWriter.write("Not sure what github/s problem is with a blank folder but now the folder is never empty.");
       readMeWriter.close();
+      System.out.println("Please wait.  Uploading to github could take some moments");
       bat();
+      System.out.println("Finished github update.");
 
     } catch (IOException le) {
       System.err.println("One or both text files might not have been created.  Not a big deal though.");
@@ -1481,7 +1485,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         FileWriter readMeWriter = new FileWriter(tempMemeTemplateFolder + "filename.txt");
         readMeWriter.write("Not sure what github/s problem is with a blank folder but now the folder is never empty");
         readMeWriter.close();
+        System.out.println("Please wait.  Uploading to github could take some moments");
         bat();
+        System.out.println("Finished github update.");
 
       } catch (IOException e) {
         System.err.println("One or both text files might not have been created.  Not a big deal tho");
