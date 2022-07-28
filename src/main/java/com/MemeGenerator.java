@@ -514,6 +514,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     imageHeight = browsingImage.getHeight();
     imageWidth = browsingImage.getWidth();
     scale = 1.1;
+    if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+    else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+    else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+    else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+    else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+    else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+    else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+    else{scale = 1.1;}
     try {
       //If the image is bigger than your screen then scale it
       if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
@@ -620,6 +628,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     imageHeight = browsingImage.getHeight();
     imageWidth = browsingImage.getWidth();
     scale = 1.1;
+    if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+    else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+    else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+    else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+    else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+    else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+    else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+    else{scale = 1.1;}
     try {
       //If the image is bigger than your screen then scale it
       if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
@@ -726,6 +742,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     imageHeight = browsingImage.getHeight();
     imageWidth = browsingImage.getWidth();
     scale = 1.1;
+    if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+    else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+    else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+    else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+    else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+    else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+    else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+    else{scale = 1.1;}
     //Scale the image if it is bigger than your screen
     try {
       if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
@@ -760,6 +784,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       imageHeight = browsingImage.getHeight();
       imageWidth = browsingImage.getWidth();
       scale = 1.1;
+      if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+      else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+      else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+      else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+      else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+      else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+      else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+      else{scale = 1.1;}
       if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
         while(imageHeight > screenHeight){
           imageHeight = (int)(browsingImage.getHeight() / scale);
@@ -841,6 +873,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     imageHeight = browsingImage.getHeight();
     imageWidth = browsingImage.getWidth();
     scale = 1.1;
+    if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+    else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+    else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+    else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+    else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+    else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+    else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+    else{scale = 1.1;}
     //Scale the image if it is bigger than your screen
     try {
       if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
@@ -880,6 +920,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       imageHeight = browsingImage.getHeight();
       imageWidth = browsingImage.getWidth();
       scale = 1.1;
+      if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+      else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+      else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+      else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+      else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+      else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+      else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+      else{scale = 1.1;}
       if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
         while(imageHeight > screenHeight){
           imageHeight = (int)(browsingImage.getHeight() / scale);
@@ -918,6 +966,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     imageHeight = browsingImage.getHeight();
     imageWidth = browsingImage.getWidth();
     scale = 1.1;
+    if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+    else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+    else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+    else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+    else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+    else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+    else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+    else{scale = 1.1;}
     try {
       if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
         while(imageHeight > screenHeight){
@@ -1039,6 +1095,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         imageHeight = browsingImage.getHeight();
         imageWidth = browsingImage.getWidth();
         scale = 1.1;
+        if((browsingImage.getHeight() / 6.4 > screenHeight) || (browsingImage.getWidth() / 6.4 > screenWidth)){scale = 6.4;}
+        else if((browsingImage.getHeight() / 6 > screenHeight) || (browsingImage.getWidth() / 6 > screenWidth)){scale = 6.1;}
+        else if((browsingImage.getHeight() / 5 > screenHeight) || (browsingImage.getWidth() / 5 > screenWidth)){scale = 5.1;}
+        else if((browsingImage.getHeight() / 4.4 > screenHeight) || (browsingImage.getWidth() / 4.4 > screenWidth)){scale = 4.4;}
+        else if((browsingImage.getHeight() / 4 > screenHeight) || (browsingImage.getWidth() / 4 > screenWidth)){scale = 4.1;}
+        else if((browsingImage.getHeight() / 3 > screenHeight) || (browsingImage.getWidth() / 3 > screenWidth)){scale = 3.1;}
+        else if((browsingImage.getHeight() / 2 > screenHeight) || (browsingImage.getWidth() / 2 > screenWidth)){scale = 2.1;}
+        else{scale = 1.1;}
         //Checking if the image needs to be scaled down
         if((imageHeight > screenHeight) || (imageWidth > screenWidth)){
           while(imageHeight > screenHeight){
