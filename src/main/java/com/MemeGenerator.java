@@ -1145,7 +1145,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         //System.err.println("Has right number of .");
       }
       else{
-        System.err.println("Too many periods.");
+        //System.err.println("Too many periods.");
         // System.err.println(theFileName);
         // System.err.println(theFileName.length());
         // System.err.println(theFileName.replaceAll("\\.","").length());
@@ -1155,6 +1155,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       }
     } catch (Exception e) {
       System.err.println("Could not count number of periods.");
+      return false;
     }
     try {
       if(theFileName.contains(".jpg")){
