@@ -1141,15 +1141,20 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
 
   public boolean isAnImage(String theFileName){
     try {
-      if (theFileName.length() - theFileName.replaceAll("\\.","").length() == theFileName.length() - 1){
+      if (theFileName.length() - theFileName.replaceAll("\\.","").length() == 1){
         //System.err.println("Has right number of .");
       }
       else{
-        //System.err.println("Too many periods.");
+        System.err.println("Too many periods.");
+        // System.err.println(theFileName);
+        // System.err.println(theFileName.length());
+        // System.err.println(theFileName.replaceAll("\\.","").length());
+        // System.err.println(theFileName.replaceAll("\\.",""));
+        // System.err.println(theFileName.length() - theFileName.replaceAll("\\.","").length());
         return false;
       }
     } catch (Exception e) {
-      //System.err.println("Could not count number of periods.");
+      System.err.println("Could not count number of periods.");
     }
     try {
       if(theFileName.contains(".jpg")){
