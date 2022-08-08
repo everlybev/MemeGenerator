@@ -78,6 +78,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int imageWidth;
   int indexOfBrowsingMeme;
   int indexOfBrowsingPresteMeme;
+  int safeToDeleteTemplate = 0;
+  int safeToDeleteMeme = 0;
   int screenWidth;
   int screenHeight;
   int smearFactor;
@@ -235,6 +237,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public void actionPerformedBrowse(){
+    safeToDeleteTemplate = 0;
+    safeToDeleteMeme = 1;
     try {
       browsedFile = BrowseWindow("Doesnt matter", "browse");
       
@@ -249,6 +253,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public void actionPerformedBrowseDown(){
+    safeToDeleteTemplate = 0;
+    safeToDeleteMeme = 1;
     try {
       browsedFile = BrowseWindow("Doesnt matter", "browseDown");
       
@@ -263,6 +269,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public void actionPerformedPreset(){
+    safeToDeleteTemplate = 1;
+    safeToDeleteMeme = 0;
     try {
       memeTemplate = BrowseWindow(blankMemeTemplateFolder, "preset");
     } catch (Exception e1) {
@@ -276,6 +284,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public void actionPerformedPresetDown(){
+    safeToDeleteTemplate = 1;
+    safeToDeleteMeme = 0;
     try {
       memeTemplate = BrowseWindow(blankMemeTemplateFolder, "presetDown");
     } catch (Exception e1) {
@@ -289,6 +299,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public void actionPerformedUpload(){
+    safeToDeleteTemplate = 0;
+    safeToDeleteMeme = 0;
     try {
       UploadWindow();
       System.out.println("Please wait.  Uploading to github could take some moments");
@@ -302,6 +314,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public void actionPerformedBuildMeme(){
+    safeToDeleteTemplate = 0;
+    safeToDeleteMeme = 0;
     try {
       if((isAnImage(memeTemplate))){createTheMeme(memeTemplate);}
       else{System.err.println("Cycle through the templates first");}
@@ -362,49 +376,56 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public void actionPerformedDeleteMeme(){
-    try {
-     Files.delete(Paths.get(mainDirectory).resolve(browsedFile));
-     System.out.println("Deleted file is: " + browsedFile);
-     numberOfMemesMade = countTheImages(mainDirectory);
-     memesMadeLabel.setText("Memes: " + Integer.toString(countTheImages(mainDirectory)));
-   } catch (IOException e1) {
-     try {
-       File deletedFile = new File(mainDirectory + "\\" + browsedFile);
-       deletedFile.delete();
-       System.out.println("Files path delete failed");
-       System.out.println("The deleted file iz: " + browsedFile);
-     } catch (Exception el) {
+    safeToDeleteTemplate = 0;
+    if(safeToDeleteMeme == 1){
+      try {
+       Files.delete(Paths.get(mainDirectory).resolve(browsedFile));
+       System.out.println("Deleted file is: " + browsedFile);
+       numberOfMemesMade = countTheImages(mainDirectory);
+       memesMadeLabel.setText("Memes: " + Integer.toString(countTheImages(mainDirectory)));
+     } catch (IOException e1) {
        try {
-        System.out.println("Couldn't delete: " + browsedFile);
-       } catch (NullPointerException e) {
-        System.out.println("You have not browsed to a meme.  Browse to a meme first.");
+         File deletedFile = new File(mainDirectory + "\\" + browsedFile);
+         deletedFile.delete();
+         System.out.println("Files path delete failed");
+         System.out.println("The deleted file iz: " + browsedFile);
+       } catch (Exception el) {
+         try {
+          System.out.println("Couldn't delete: " + browsedFile);
+         } catch (NullPointerException e) {
+          System.out.println("You have not browsed to a meme.  Browse to a meme first.");
+         }
        }
      }
-   }
+    }
+    else{System.out.println("You must browse to a meme.");}
   }
 
   public void actionPerformedDeleteMemeTemplate(){
-    try {//Not sure how to make this work
-         //File still gets deleted tho so low priority
-     //Path thePath
-     Files.delete(Paths.get(mainDirectory, "Blank-Templates").resolve(memeTemplate));
-     System.out.println("Deleted file iz: " + memeTemplate);
-     numberOfMemesTemplates = countTheImages(blankMemeTemplateFolder);
-     templatesLabel.setText("Templates: " + Integer.toString(countTheImages(blankMemeTemplateFolder)));
-   } catch (IOException e1) {
-     try {
-       File deletedFile = new File(blankMemeTemplateFolder + "\\" + memeTemplate);
-       deletedFile.delete();
-       System.out.println("Files path delete failed");
+    safeToDeleteMeme = 0;
+    if(safeToDeleteTemplate == 1){
+      try {//Not sure how to make this work
+           //File still gets deleted tho so low priority
+       //Path thePath
+       Files.delete(Paths.get(mainDirectory, "Blank-Templates").resolve(memeTemplate));
        System.out.println("Deleted file iz: " + memeTemplate);
-     } catch (Exception el) {
+       numberOfMemesTemplates = countTheImages(blankMemeTemplateFolder);
+       templatesLabel.setText("Templates: " + Integer.toString(countTheImages(blankMemeTemplateFolder)));
+     } catch (IOException e1) {
        try {
-        System.out.println("Couldn't delete: " + memeTemplate);
-       } catch (NullPointerException e) {
-        System.out.println("You have not browsed to a template.  Browse to a template first.");
+         File deletedFile = new File(blankMemeTemplateFolder + "\\" + memeTemplate);
+         deletedFile.delete();
+         System.out.println("Files path delete failed");
+         System.out.println("Deleted file iz: " + memeTemplate);
+       } catch (Exception el) {
+         try {
+          System.out.println("Couldn't delete: " + memeTemplate);
+         } catch (NullPointerException e) {
+          System.out.println("You have not browsed to a template.  Browse to a template first.");
+         }
        }
-     }
-   }
+     }}
+    else{System.out.println("You must browse to a template.");}
   }
 
   public void actionPerformedOpenTheInstructions(){
@@ -1053,6 +1074,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
  }
 
   public void UploadWindow() {
+    safeToDeleteTemplate = 0;
+    safeToDeleteMeme = 0;
     //Store current working directory of project
     File workingDirectory = new File("");
     String currentPath = workingDirectory.getAbsolutePath();
