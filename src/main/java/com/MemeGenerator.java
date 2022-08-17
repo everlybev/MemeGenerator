@@ -1180,6 +1180,18 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       System.err.println("Could not count number of periods.");
       return false;
     }
+
+    String theFileExtension;
+    theFileExtension = theFileName.split("\\.")[1];
+    if(theFileExtension.matches("[a-zA-Z]+")){
+      //this is good
+    }
+    else{
+      System.err.println(theFileName);
+      System.err.println(theFileExtension);
+      return false;
+    }
+
     try {
       if(theFileName.contains(".jpg")){
         return true;
