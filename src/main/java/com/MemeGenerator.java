@@ -1187,8 +1187,6 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       //this is good
     }
     else{
-      System.err.println(theFileName);
-      System.err.println(theFileExtension);
       return false;
     }
 
