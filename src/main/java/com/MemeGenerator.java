@@ -88,6 +88,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   int numberOfMemesMade = 0;
   int numberOfMemesTemplates = 880;
   int numberOfImages = 0;
+  int undoState = 0;
   File memeFile = new File(".");
   float fontSize;
   String mainDirectory = memeFile.getAbsolutePath();
@@ -316,6 +317,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   public void actionPerformedBuildMeme(){
     safeToDeleteTemplate = 0;
     safeToDeleteMeme = 0;
+    undoState = 0;
     try {
       if((isAnImage(memeTemplate))){createTheMeme(memeTemplate);}
       else{System.err.println("Cycle through the templates first");}
@@ -1557,6 +1559,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton select=new JButton("Submit");
   select.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
+      undoState = 0;
       Graphics g = image.getGraphics();
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
@@ -1615,6 +1618,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton save = new JButton("Save this Edit");
   save.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
+      undoState = 1;
       if(previewing == 0){
         //Delete all files in t3mp if this is the first attemot of memeing
       File tempMemeToBeDeleted = new File(tempMemeTemplateFolder);
@@ -1725,6 +1729,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton smearButton=new JButton("Smear");
   smearButton.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
+      undoState = 1;
       if(previewing == 0){
         //Delete all files in t3mp if this is the first attemot of memeing
       File tempMemeToBeDeleted = new File(tempMemeTemplateFolder);
@@ -1844,50 +1849,59 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton undo=new JButton("Undo");
   undo.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
-      System.out.println("undo");
-      sizeOfFont.setBackground(Color.YELLOW);
-      redBox.setBackground(Color.YELLOW);
-      greenBox.setBackground(Color.YELLOW);
-      blueBox.setBackground(Color.YELLOW);
-      xBox.setBackground(Color.YELLOW);
-      yBox.setBackground(Color.YELLOW);
-      caption.setBackground(Color.YELLOW);
-      //Get length of files in t3mp directory
-      File generatedMemesDirectory = new File(tempMemeTemplateFolder);
-      String[] tempMeme = generatedMemesDirectory.list();
-      //If 0 do nothing
-      if(tempMeme.length == 0){
-        System.out.println("Nothing to undo");
-      }
-      //If one copy meme from upload folder
-      else if(tempMeme.length == 1){
-        try {
-          previewing = previewing + 1;
-          image = ImageIO.read(new File(blankMemeTemplateFolder + rawMeme));
-          System.out.println("writing: " + newMemeFileName + previewing + "." + newMemeFileFormat);
-          ImageIO.write(image, newMemeFileFormat, new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat));
-          image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat));
-          System.out.println("read: " + newMemeFileName + previewing + "." + newMemeFileFormat);
-        } catch (IOException e) {
-          System.err.println("Undo failed.  Please start from scratch.");
+      //If state is 1 you can undo
+      //else do not undo
+      if(undoState == 1){
+        System.out.println("undo");
+        sizeOfFont.setBackground(Color.YELLOW);
+        redBox.setBackground(Color.YELLOW);
+        greenBox.setBackground(Color.YELLOW);
+        blueBox.setBackground(Color.YELLOW);
+        xBox.setBackground(Color.YELLOW);
+        yBox.setBackground(Color.YELLOW);
+        caption.setBackground(Color.YELLOW);
+        //Get length of files in t3mp directory
+        File generatedMemesDirectory = new File(tempMemeTemplateFolder);
+        String[] tempMeme = generatedMemesDirectory.list();
+        //If 0 do nothing
+        if(tempMeme.length == 0){
+          System.out.println("Nothing to undo");
+        }
+        //If one copy meme from upload folder
+        else if(tempMeme.length == 1){
+          undoState = 0;
+          try {
+            previewing = previewing + 1;
+            image = ImageIO.read(new File(blankMemeTemplateFolder + rawMeme));
+            System.out.println("writing: " + newMemeFileName + previewing + "." + newMemeFileFormat);
+            ImageIO.write(image, newMemeFileFormat, new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat));
+            image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat));
+            System.out.println("read: " + newMemeFileName + previewing + "." + newMemeFileFormat);
+          } catch (IOException e) {
+            System.err.println("Undo failed.  Please start from scratch.");
+          }
+        }
+        //If more than one take second most recent and name it most recent
+          //Seems to work but you cant undo twice
+        else if(tempMeme.length > 1){
+          undoState = 0;
+          System.out.println("newest file you want to delete: " + newMemeFileName + previewing + "." + newMemeFileFormat); //The newest file (You dont want that)
+          System.out.println("second most recent file you want to go back to: " + newMemeFileName + (previewing-1) + "." + newMemeFileFormat); //The newest file (You want to undo back to this)
+          //Make image = second most recent file
+          try {
+            image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + (previewing-1) + "." + newMemeFileFormat));
+            File undidMeme = new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat);
+            undidMeme.delete();
+            previewing = previewing + 1;
+            ImageIO.write(image, newMemeFileFormat, new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat));
+  
+          } catch (IOException e) {
+            System.err.println("Undo failed.  You must save an edit between Undos.  Please continue memeing or start over.");
+          }
         }
       }
-      //If more than one take second most recent and name it most recent
-        //Seems to work but you cant undo twice
-      else if(tempMeme.length > 1){
-        System.out.println("newest file you want to delete: " + newMemeFileName + previewing + "." + newMemeFileFormat); //The newest file (You dont want that)
-        System.out.println("second most recent file you want to go back to: " + newMemeFileName + (previewing-1) + "." + newMemeFileFormat); //The newest file (You want to undo back to this)
-        //Make image = second most recent file
-        try {
-          image = ImageIO.read(new File(tempMemeTemplateFolder + newMemeFileName + (previewing-1) + "." + newMemeFileFormat));
-          File undidMeme = new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat);
-          undidMeme.delete();
-          previewing = previewing + 1;
-          ImageIO.write(image, newMemeFileFormat, new File(tempMemeTemplateFolder + newMemeFileName + previewing + "." + newMemeFileFormat));
-
-        } catch (IOException e) {
-          System.err.println("Undo failed.  You must save an edit between Undos.  Please continue memeing or start over.");
-        }
+      else{
+        System.out.println("Make an edit before undoing");
       }
     }
   });
@@ -1918,6 +1932,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton startFromScratch = new JButton("Restart Meme Building");
   startFromScratch.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
+      undoState = 0;
       previewing = 0;
       indexOfBrowsingMeme = 0;
       indexOfBrowsingPresteMeme = 0;
