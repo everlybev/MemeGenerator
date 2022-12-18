@@ -1474,8 +1474,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   });
   memeBuildingPanel.add(greenSmearBox); //Each button/textbox needs to be added to the label
 
-  JLabel blueBoxLabel = new JLabel("Regular Blue");
-  JTextField blueBox= new JTextField("Enter in B value [0,255]");
+  JLabel blueBoxLabel = new JLabel("Enter in B value [0,255]");
+  JTextField blueBox= new JTextField("Regular Blue");
   blueBox.setHorizontalAlignment(SwingConstants.CENTER);
 
   blueBox.setBackground(Color.YELLOW);
