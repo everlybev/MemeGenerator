@@ -1722,7 +1722,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         File readMe = new File(tempMemeTemplateFolder + "ReadMe.txt");
         readMe.createNewFile();
         FileWriter readMeWriter = new FileWriter(tempMemeTemplateFolder + "filename.txt");
-        readMeWriter.write("Not sure what github/s problem is with a blank folder but now the folder is never empty");
+        readMeWriter.write("Not sure what github/s problem is with a blank folder but now the folder is never empty.");
         readMeWriter.close();
         System.out.println("Please wait.  Uploading to github could take some moments");
         bat();
@@ -2093,7 +2093,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         File readMe = new File(tempMemeTemplateFolder + "ReadMe.txt");
         readMe.createNewFile();
         FileWriter readMeWriter = new FileWriter(tempMemeTemplateFolder + "filename.txt");
-        readMeWriter.write("Not sure what github/s problem is with a blank folder but now the folder is never empty");
+        readMeWriter.write("Not sure what github/s problem is with a blank folder but now the folder is never empty.");
         readMeWriter.close();
 
       } catch (IOException e) {
