@@ -54,20 +54,30 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JLabel templatesLabel;
   JLabel widthLabel;
   JLabel heightLabel;
-  JTextField colorPreviewLabel = new JTextField("Preview your color");
+  JTextField colorPreviewLabel = new JTextField("Regular color");
+  JTextField colorSmearPreviewLabel = new JTextField("Smear color");
   transient Image scaledImage;
   ImageIcon scaledImageIcon;
   int previewing = 0;
+  int topX;
+  int topY;
+  int xToggle = 0;
+  int yToggle = 0;
+
   int red;
   int green;
   int blue;
-  int topX;
-  int topY;
+  int redSmear;
+  int greenSmear;
+  int blueSmear;
+
   int redToggle = 0;
   int greenToggle = 0;
   int blueToggle = 0;
-  int xToggle = 0;
-  int yToggle = 0;
+  int redSmearToggle = 0;
+  int greenSmearToggle = 0;
+  int blueSmearToggle = 0;
+
   int fontToggle = 0;
   int captionToggle = 0;
   int lastPressedBrowse = 3;
@@ -419,6 +429,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
          deletedFile.delete();
          System.out.println("Files path delete failed");
          System.out.println("Deleted file iz: " + memeTemplate);
+         System.out.println("Please wait.  Uploading to github could take some moments");
+         bat();
+         System.out.println("Finished github update.");
        } catch (Exception el) {
          try {
           System.out.println("Couldn't delete: " + memeTemplate);
@@ -1261,6 +1274,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     red = 204;
     green = 204;
     blue = 255;
+    redSmear = 51;
+    greenSmear = 51;
+    blueSmear = 51;
     topX = 1;
     topY = 1;
     fontSize = 1;
@@ -1333,11 +1349,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   });
 
   JLabel redBoxLabel = new JLabel("Enter in R value [0,255]:");
-  JTextField redBox= new JTextField("Enter in R value [0,255]");
+  JTextField redBox= new JTextField("Regular Red");
   redBox.setHorizontalAlignment(SwingConstants.CENTER);
-
   redBox.setBackground(Color.YELLOW);
-
   redBox.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent r){
       String RString = redBox.getText();
@@ -1364,11 +1378,40 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       }
     }
   });
-
   memeBuildingPanel.add(redBox); //Each button/textbox needs to be added to the label
+  JTextField redSmearBox= new JTextField("Smear Red");
+  redSmearBox.setHorizontalAlignment(SwingConstants.CENTER);
+  redSmearBox.setBackground(Color.YELLOW);
+  redSmearBox.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent r){
+      String RSmearString = redSmearBox.getText();
+      redSmearBox.setBackground(Color.WHITE);
+      try {
+        redSmear = Integer.parseInt(RSmearString);
+      } catch (Exception fonts) {
+        redSmear = 251;
+      }
+      finally{
+        if(redSmearToggle == 0){
+          redSmearBox.setBackground(new ColorUIResource(54, 180, 251));
+          redSmearToggle = 1;
+        }
+        else{
+          redSmearBox.setBackground(new ColorUIResource(204, 204, 255));
+          redSmearToggle = 0;
+        }
+        try {
+          colorSmearPreviewLabel.setBackground(new Color(redSmear, greenSmear, blueSmear));
+        } catch (Exception e) {
+          System.err.println("Enter integers for (RGB)");
+        }
+      }
+    }
+  });
+  memeBuildingPanel.add(redSmearBox); //Each button/textbox needs to be added to the label
 
   JLabel greenBoxLabel = new JLabel("Enter in G value [0,255]:");
-  JTextField greenBox= new JTextField("Enter in G value [0,255]");
+  JTextField greenBox= new JTextField("Regular Green");
   greenBox.setHorizontalAlignment(SwingConstants.CENTER);
 
   greenBox.setBackground(Color.YELLOW);
@@ -1399,8 +1442,39 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     }
   });
   memeBuildingPanel.add(greenBox); //Each button/textbox needs to be added to the label
+  JTextField greenSmearBox= new JTextField("Smear Green");
+  greenSmearBox.setHorizontalAlignment(SwingConstants.CENTER);
 
-  JLabel blueBoxLabel = new JLabel("Enter in B value [0,255]:");
+  greenSmearBox.setBackground(Color.YELLOW);
+  greenSmearBox.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent g){
+      String GString = greenSmearBox.getText();
+      greenSmearBox.setBackground(Color.WHITE);
+      try {
+        greenSmear = Integer.parseInt(GString); // Ok I know this is childish but ha gstring.  Typed Rstring and followed the pattern with green but then realized what I typed and had a little laugh.
+      } catch (Exception e) {
+        greenSmear = 253;
+      }
+      finally{
+        if(greenSmearToggle == 0){
+          greenSmearBox.setBackground(new ColorUIResource(54, 180, 251));
+          greenSmearToggle = 1;
+        }
+        else{
+          greenSmearBox.setBackground(new ColorUIResource(204, 204, 255));
+          greenSmearToggle = 0;
+        }
+        try {
+          colorSmearPreviewLabel.setBackground(new Color(redSmear, greenSmear, blueSmear));
+        } catch (Exception e) {
+          System.err.println("Enter the integers for RGB");
+        }
+      }
+    }
+  });
+  memeBuildingPanel.add(greenSmearBox); //Each button/textbox needs to be added to the label
+
+  JLabel blueBoxLabel = new JLabel("Regular Blue");
   JTextField blueBox= new JTextField("Enter in B value [0,255]");
   blueBox.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -1432,6 +1506,37 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     }
   });
   memeBuildingPanel.add(blueBox); //Each button/textbox needs to be added to the label
+  JTextField blueSmearBox= new JTextField("Smear Blue");
+  blueSmearBox.setHorizontalAlignment(SwingConstants.CENTER);
+
+  blueSmearBox.setBackground(Color.YELLOW);
+  blueSmearBox.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent b){
+      String BSmearString = blueSmearBox.getText();
+      blueSmearBox.setBackground(Color.WHITE);
+      try {
+        blueSmear = Integer.parseInt(BSmearString);
+      } catch (Exception e) {
+      blueSmear = 255;
+      }
+      finally{
+        if(blueSmearToggle == 0){
+          blueSmearBox.setBackground(new ColorUIResource(54, 180, 251));
+          blueSmearToggle = 1;
+        }
+        else{
+          blueSmearBox.setBackground(new ColorUIResource(204, 204, 255));
+          blueSmearToggle = 0;
+        }
+        try {
+          colorSmearPreviewLabel.setBackground(new Color(redSmear, greenSmear, blueSmear));
+        } catch (Exception e) {
+          System.err.println("Enter integers for RGB");
+        }
+      }
+    }
+  });
+  memeBuildingPanel.add(blueSmearBox); //Each button/textbox needs to be added to the label
 
   JLabel xBoxLabel = new JLabel("Enter in X value < " + memeWidth + ":");
   JTextField xBox= new JTextField("Enter in X value < " + memeWidth);
@@ -1554,6 +1659,22 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     }
   });
   memeBuildingPanel.add(colorPreviewLabel); //Each button/textbox needs to be added to the label
+
+  //JLabel colorPreviewLabel = new JLabel("Press enter to preview your color"); //Label not needed?
+  colorSmearPreviewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+  colorSmearPreviewLabel.setBackground(new Color(redSmear, greenSmear, blueSmear));
+  // changed line 573 below from caption to Title.
+  colorSmearPreviewLabel.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent t){
+      try {
+        colorSmearPreviewLabel.setBackground(new Color(redSmear, greenSmear, blueSmear));
+      } catch (Exception e) {
+        System.err.println("Enter integers for RGB");
+      }
+    }
+  });
+  memeBuildingPanel.add(colorSmearPreviewLabel); //Each button/textbox needs to be added to the label
 
    
   JButton select=new JButton("Submit");
@@ -1748,6 +1869,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if(green < 0){green = 0;}
       if(blue > 255){blue = 255;}
       if(blue < 0){blue = 0;}
+      if(redSmear > 255){redSmear = 255;}
+      if(redSmear < 0){redSmear = 0;}
+      if(greenSmear > 255){greenSmear = 255;}
+      if(greenSmear < 0){greenSmear = 0;}
+      if(blueSmear > 255){blueSmear = 255;}
+      if(blueSmear < 0){blueSmear = 0;}
       if(topX > memeWidth){topX = memeWidth / 2;}
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
@@ -1756,34 +1883,40 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       System.out.println("the value of previewing is: " + previewing);
       System.out.println("Your font size is: " + fontSize);
       System.out.println("Your caption is: " + memeText);
+      System.out.println("Your smear triplet (R,G,B) is: (" + redSmear + ", " + greenSmear + ", " + blueSmear + ") ");
       System.out.println("Your color triplet (R,G,B) is: (" + red + ", " + green + ", " + blue + ") ");
       Graphics g = image.getGraphics();
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
+      Color fontSmearColor = new Color(redSmear, greenSmear, blueSmear);
       smearFactor = CalculateSmearFactor();
       //make sure x and y are not too close to the edge
       if(topX <= smearFactor){topX = smearFactor + 5;}
       if(topY <= smearFactor){topY = smearFactor + 5;}
       if(topX >= memeWidth - smearFactor){topX = memeWidth - smearFactor - 5;}
       if(topY >= memeHeight - smearFactor){topY = memeHeight - smearFactor - 5;}
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, topX+smearFactor, topY);
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, topX-smearFactor, topY);
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, topX, topY+smearFactor);
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, topX, topY-smearFactor);
+      g.setColor(fontColor);
+      g.drawString(memeText, topX, topY);
       if(fontSize > 20){
         //If it is significantly big get the diagonnals
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(45))), (int)(topY+smearFactor*java.lang.Math.cos(45)));
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(45))), (int)(topY+smearFactor*java.lang.Math.cos(45)));
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(45))), (int)(topY-smearFactor*java.lang.Math.cos(45)));
-      g.setColor(fontColor);
+      g.setColor(fontSmearColor);
       g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(45))), (int)(topY-smearFactor*java.lang.Math.cos(45)));
+      g.setColor(fontColor);
+      g.drawString(memeText, (int)((topX)), (int)(topY));
       }
       g.dispose();
       System.out.println("Your text smear center (X, Y) is: (" + topX +  ", " + topY + ") ");
@@ -1973,8 +2106,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   memeBuildingPanel.add(caption); //Each button/textbox needs to be added to the label
   memeBuildingPanel.add(select);  // add submit button
   memeBuildingPanel.add(save);  // add submit button
-  memeBuildingPanel.add(preview);  // add submit button
-  memeBuildingPanel.add(undo);  // add submit button
+  memeBuildingPanel.add(preview);  // add preview button
+  memeBuildingPanel.add(undo);  // add undo button
 
   memeBuildingPanel.add(redBoxLabel);
   memeBuildingPanel.add(blueBoxLabel);
@@ -1987,6 +2120,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   memeBuildingPanel.add(startFromScratch);
   memeBuildingPanel.add(closeWindow);
   memeBuildingPanel.add(colorPreviewLabel);
+  memeBuildingPanel.add(colorSmearPreviewLabel);
   memeBuildingPanel.add(smearButton);
 
 
@@ -1998,14 +2132,18 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
 
   //Set Locations
   typingInstructions.setBounds(30,10,571,45);
+
   redBoxLabel.setBounds(30,75,200,30);
-  redBox.setBounds(220,75,175,30);
+  redBox.setBounds(310,75,85,30);
+  redSmearBox.setBounds(220,75,85,30);
 
   greenBoxLabel.setBounds(30,115,200,30);
-  greenBox.setBounds(220,115,175,30);
+  greenBox.setBounds(220+5+85,115,85,30);
+  greenSmearBox.setBounds(220,115,85,30);
 
   blueBoxLabel.setBounds(30,155,200,30);
-  blueBox.setBounds(220,155,175,30);
+  blueBox.setBounds(220+5+85,155,85,30);
+  blueSmearBox.setBounds(220,155,85,30);
 
   xBoxLabel.setBounds(30,195,200,30);
   xBox.setBounds(220,195,175,30);
@@ -2017,7 +2155,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   Title.setBounds(220,275,175,30);
 
   startFromScratch.setBounds(225,315,155,30);
-  colorPreviewLabel.setBounds(55,315,155,30);
+  colorPreviewLabel.setBounds(55+5+75,315,75,30);
+  colorSmearPreviewLabel.setBounds(55,315,75,30);
 
   sizeOfFontLabel.setBounds(30,355,200,30);
   sizeOfFont.setBounds(220,355,175,30);
