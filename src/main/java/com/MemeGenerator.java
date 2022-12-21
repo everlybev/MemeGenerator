@@ -2125,7 +2125,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton centerer = new JButton("Center X");
   centerer.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent cen){
-      float xLocation = (imageWidth - widthOfCaption) / 2;
+      float xLocation = (browsingImage.getWidth() - widthOfCaption) / 2;
       topX = (int) xLocation;
       System.out.println("X axis is centered. Text will start at: " + String.valueOf(topX));
       centered = true;
