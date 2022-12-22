@@ -1776,9 +1776,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if(blue > 255){blue = 255;}
       if(blue < 0){blue = 0;}
       if(topX > memeWidth){topX = memeWidth / 2;}
+      if(topX+widthOfCaption > memeWidth){
+        System.out.println("The width was too log for the specified x");
+        topX = image.getWidth()-5-widthOfCaption;
+        System.out.println("The new x point is: " + String.valueOf(topX));
+      }
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
-      if(topY < 0){topY = 1;}
+      if(topY-fontSize-10 < 0){topY = ((int)fontSize)-10;}
       if(fontSize <= 1){fontSize = 1;}
       if(centered){System.out.println("The text is centered on x axis");}
       System.out.println("the value of previewing is: " + previewing);
@@ -1894,9 +1899,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if(blueSmear > 255){blueSmear = 255;}
       if(blueSmear < 0){blueSmear = 0;}
       if(topX > memeWidth){topX = memeWidth / 2;}
+      if(topX+widthOfCaption+(smearFactor+10) > memeWidth){
+        System.out.println("The smear width was too log for the specified x");
+        topX = image.getWidth()-10-widthOfCaption-smearFactor;
+        System.out.println("The new x point is: " + String.valueOf(topX));
+      }
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
-      if(topY < 0){topY = 1;}
+      if(topY-fontSize-smearFactor < 0){topY = ((int)fontSize)+smearFactor-10;}
       if(fontSize <= 4){fontSize = 5;}
       if(centered){System.out.println("The text is centered on x axis");}
       System.out.println("the value of previewing is: " + previewing);
