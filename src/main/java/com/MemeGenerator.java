@@ -1698,12 +1698,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   select.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
       undoState = 0;
-      Graphics g = image.getGraphics();
-      g.setFont(g.getFont().deriveFont(fontSize));
-      Color fontColor = new Color(red, green, blue);
-      g.setColor(fontColor);
-      g.drawString(memeText, topX, topY);
-      g.dispose();
+      // Graphics g = image.getGraphics();
+      // g.setFont(g.getFont().deriveFont(fontSize));
+      // Color fontColor = new Color(red, green, blue);
+      // g.setColor(fontColor);
+      // g.drawString(memeText, topX, topY);
+      // g.dispose();
       previewing = 0;
       titleEntered = 0;
       //check if the same name exists already
@@ -1924,29 +1924,28 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if(topY <= smearFactor){topY = smearFactor + 5;}
       if(topX >= memeWidth - smearFactor){topX = memeWidth - smearFactor - 5;}
       if(topY >= memeHeight - smearFactor){topY = memeHeight - smearFactor - 5;}
+      // g.setColor(fontSmearColor);
+      // g.drawString(memeText, topX+smearFactor, topY);
+      // g.setColor(fontSmearColor);
+      // g.drawString(memeText, topX-smearFactor, topY);
+      // g.setColor(fontSmearColor);
+      // g.drawString(memeText, topX, topY+smearFactor);
+      // g.setColor(fontSmearColor);
+      // g.drawString(memeText, topX, topY-smearFactor);
+      // g.setColor(fontColor);
+      // g.drawString(memeText, topX, topY);
+      for(int i=0; i<90; i++){
       g.setColor(fontSmearColor);
-      g.drawString(memeText, topX+smearFactor, topY);
+      g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(i))), (int)(topY+smearFactor*java.lang.Math.cos(i)));
       g.setColor(fontSmearColor);
-      g.drawString(memeText, topX-smearFactor, topY);
+      g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(i))), (int)(topY+smearFactor*java.lang.Math.cos(i)));
       g.setColor(fontSmearColor);
-      g.drawString(memeText, topX, topY+smearFactor);
+      g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(i))), (int)(topY-smearFactor*java.lang.Math.cos(i)));
       g.setColor(fontSmearColor);
-      g.drawString(memeText, topX, topY-smearFactor);
-      g.setColor(fontColor);
-      g.drawString(memeText, topX, topY);
-      if(fontSize > 20){
-        //If it is significantly big get the diagonnals
-      g.setColor(fontSmearColor);
-      g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(45))), (int)(topY+smearFactor*java.lang.Math.cos(45)));
-      g.setColor(fontSmearColor);
-      g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(45))), (int)(topY+smearFactor*java.lang.Math.cos(45)));
-      g.setColor(fontSmearColor);
-      g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(45))), (int)(topY-smearFactor*java.lang.Math.cos(45)));
-      g.setColor(fontSmearColor);
-      g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(45))), (int)(topY-smearFactor*java.lang.Math.cos(45)));
+      g.drawString(memeText, (int)((topX-smearFactor*java.lang.Math.sin(i))), (int)(topY-smearFactor*java.lang.Math.cos(i)));
+      }
       g.setColor(fontColor);
       g.drawString(memeText, (int)((topX)), (int)(topY));
-      }
       g.dispose();
       System.out.println("Your text smear center (X, Y) is: (" + topX +  ", " + topY + ") ");
       previewing = previewing + 1;
