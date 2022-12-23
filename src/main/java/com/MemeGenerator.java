@@ -1337,6 +1337,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
      g.setFont(g.getFont().deriveFont(fontSize));
      widthOfCaption = g.getFontMetrics().stringWidth(memeText);
      System.out.println("width of text is: " + String.valueOf(widthOfCaption));
+     heightOfCaption = g.getFontMetrics().getAscent();
+     System.out.println("height of text is: " + String.valueOf(heightOfCaption));
     }
   });
   
@@ -1348,8 +1350,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.setFont(g.getFont().deriveFont(fontSize));
       widthOfCaption = g.getFontMetrics().stringWidth(memeText);
       System.out.println("width of text is: " + String.valueOf(widthOfCaption));
-      //heightOfCaption = g.getFontMetrics().stringHeight(memeText);
-      //System.out.println(heightOfCaption);
+      heightOfCaption = g.getFontMetrics().getAscent();
+      System.out.println("height of text is: " + String.valueOf(heightOfCaption));
 
       caption.setBackground(Color.WHITE);
       if(captionToggle == 0){
@@ -1776,15 +1778,20 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if(blue > 255){blue = 255;}
       if(blue < 0){blue = 0;}
       if(topX > memeWidth){topX = memeWidth / 2;}
-      if(topX+widthOfCaption > memeWidth){
-        System.out.println("The width was too log for the specified x");
-        topX = image.getWidth()-5-widthOfCaption;
+      if(fontSize <= 1){fontSize = 1;}
+      if(topX+widthOfCaption > image.getWidth()){
+        System.out.println("The width was too long for the specified x");
+        topX = image.getWidth()-widthOfCaption;
         System.out.println("The new x point is: " + String.valueOf(topX));
       }
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
-      if(topY-fontSize-10 < 0){topY = ((int)fontSize)-10;}
-      if(fontSize <= 1){fontSize = 1;}
+      if(topY-fontSize+10 < 0){topY = ((int)fontSize)-5;}
+      if(topY+2-heightOfCaption < 0){
+        System.out.println("The height was too low for the specified y");
+        topY = heightOfCaption;
+        System.out.println("The new y point is: " + String.valueOf(topY));
+      }
       if(centered){System.out.println("The text is centered on x axis");}
       System.out.println("the value of previewing is: " + previewing);
       System.out.println("Your font size is: " + fontSize);
@@ -1898,16 +1905,21 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       if(greenSmear < 0){greenSmear = 0;}
       if(blueSmear > 255){blueSmear = 255;}
       if(blueSmear < 0){blueSmear = 0;}
+      if(fontSize <= 4){fontSize = 5;}
       if(topX > memeWidth){topX = memeWidth / 2;}
-      if(topX+widthOfCaption+(smearFactor+10) > memeWidth){
+      if(topX+widthOfCaption+(smearFactor) > memeWidth){
         System.out.println("The smear width was too log for the specified x");
-        topX = image.getWidth()-10-widthOfCaption-smearFactor;
+        topX = image.getWidth()-widthOfCaption-smearFactor;
         System.out.println("The new x point is: " + String.valueOf(topX));
       }
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
-      if(topY-fontSize-smearFactor < 0){topY = ((int)fontSize)+smearFactor-10;}
-      if(fontSize <= 4){fontSize = 5;}
+      if(topY-fontSize-smearFactor+2 < 0){topY = ((int)fontSize)+smearFactor-5;}
+      if(topY-heightOfCaption-smearFactor < 0){
+        System.out.println("The height was too low for the specified y");
+        topY = heightOfCaption-3+smearFactor;
+        System.out.println("The new y point is: " + String.valueOf(topY));
+      }
       if(centered){System.out.println("The text is centered on x axis");}
       System.out.println("the value of previewing is: " + previewing);
       System.out.println("Your font size is: " + fontSize);
