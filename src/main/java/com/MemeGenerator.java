@@ -34,10 +34,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
 {
   boolean itExists;
   boolean centered;
+  boolean centeredY;
   transient BufferedImage image;
   transient BufferedImage browsingImage;
   double scale;
   File tempFile;
+  float alpha = (float).25;
   JButton browse;
   JButton browseDown;
   JButton upload;
@@ -1786,13 +1788,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       }
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
-      if(topY-fontSize+10 < 0){topY = ((int)fontSize)-5;}
-      if(topY+2-heightOfCaption < 0){
+      if(topY-fontSize*alpha < 0){topY = ((int)(fontSize*alpha)+1);}
+      if(topY-fontSize*alpha < 0){
         System.out.println("The height was too low for the specified y");
-        topY = heightOfCaption;
+        topY = ((int)(fontSize*alpha)+1);
         System.out.println("The new y point is: " + String.valueOf(topY));
       }
       if(centered){System.out.println("The text is centered on x axis");}
+      if(centeredY){System.out.println("The text is centered on y axis");}
       System.out.println("the value of previewing is: " + previewing);
       System.out.println("Your font size is: " + fontSize);
       System.out.println("Your caption is: " + memeText);
@@ -1914,13 +1917,13 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       }
       if(topX < 0){topX = 1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
-      if(topY-fontSize-smearFactor+2 < 0){topY = ((int)fontSize)+smearFactor-5;}
-      if(topY-heightOfCaption-smearFactor < 0){
-        System.out.println("The height was too low for the specified y");
-        topY = heightOfCaption-3+smearFactor;
+      //if(topY-fontSize-smearFactor+2 < 0){topY = ((int)(fontSize*alpha))+smearFactor-5;}
+      if(topY-(((heightOfCaption)*(1-alpha))) < 0){
+        topY = (int)(((heightOfCaption)*(1-alpha))+smearFactor+5);
         System.out.println("The new y point is: " + String.valueOf(topY));
       }
       if(centered){System.out.println("The text is centered on x axis");}
+      if(centeredY){System.out.println("The text is centered on y axis");}
       System.out.println("the value of previewing is: " + previewing);
       System.out.println("Your font size is: " + fontSize);
       System.out.println("Your caption is: " + memeText);
@@ -1934,8 +1937,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       //make sure x and y are not too close to the edge
       if(topX <= smearFactor){topX = smearFactor + 5;}
       if(topY <= smearFactor){topY = smearFactor + 5;}
-      if(topX >= memeWidth - smearFactor){topX = memeWidth - smearFactor - 5;}
-      if(topY >= memeHeight - smearFactor){topY = memeHeight - smearFactor - 5;}
+      if(topX >= memeWidth - smearFactor){topX = (memeWidth - smearFactor - 5);}
+      if(topY >= memeHeight - smearFactor){topY = (memeHeight - smearFactor - 5);}
       // g.setColor(fontSmearColor);
       // g.drawString(memeText, topX+smearFactor, topY);
       // g.setColor(fontSmearColor);
@@ -2152,6 +2155,16 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       centered = true;
     }});
 
+  JButton centererY = new JButton("Center Y");
+  centererY.addActionListener(new ActionListener(){
+    public void actionPerformed(ActionEvent cenY){
+      float yLocation = ((browsingImage.getHeight() + heightOfCaption) / 2);
+      yLocation = yLocation - (alpha * heightOfCaption);
+      topY = (int) yLocation;
+      System.out.println("Y axis is centered. Text will start at: " + String.valueOf(topY));
+      centeredY = true;
+    }});
+
   memeBuildingPanel.add(typingInstructions); //add instructions to type in text fields
   memeBuildingPanel.add(sizeOfFont); //Each button/textbox needs to be added to the label
   memeBuildingPanel.add(caption); //Each button/textbox needs to be added to the label
@@ -2160,6 +2173,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   memeBuildingPanel.add(preview);  // add preview button
   memeBuildingPanel.add(undo);  // add undo button
   memeBuildingPanel.add(centerer);  // add center text on x axis button
+  memeBuildingPanel.add(centererY);  // add center text on y axis button
 
   memeBuildingPanel.add(redBoxLabel);
   memeBuildingPanel.add(blueBoxLabel);
@@ -2202,7 +2216,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   centerer.setBounds(220,195,85,30);
 
   yBoxLabel.setBounds(30,235,200,30);
-  yBox.setBounds(220,235,175,30);
+  yBox.setBounds(310,235,85,30);
+  centererY.setBounds(220,235,85,30);
 
   TitleLabel.setBounds(30,275,200,30);
   Title.setBounds(220,275,175,30);
@@ -2233,6 +2248,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   closeWindow.setBorder(BorderFactory.createLineBorder(Color.black));
   smearButton.setBorder(BorderFactory.createLineBorder(Color.black));
   centerer.setBorder(BorderFactory.createLineBorder(Color.black));
+  centererY.setBorder(BorderFactory.createLineBorder(Color.black));
 
   //I forgot public void was a thing so I said public int
   //We don't use this return but I dont feel like changing to void from int
