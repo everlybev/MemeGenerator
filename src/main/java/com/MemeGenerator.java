@@ -1338,6 +1338,15 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
      Graphics g = image.getGraphics();
      g.setFont(g.getFont().deriveFont(fontSize));
      widthOfCaption = g.getFontMetrics().stringWidth(memeText);
+     if(widthOfCaption >= image.getWidth()){
+      System.out.println("Your font size was too big for the text.");
+      while(widthOfCaption >= image.getWidth()){
+        fontSize = fontSize - 1;
+        g.setFont(g.getFont().deriveFont(fontSize));
+        widthOfCaption = g.getFontMetrics().stringWidth(memeText);
+      }
+     }
+     System.out.println("Your font size is " + String.valueOf(fontSize));
      System.out.println("width of text is: " + String.valueOf(widthOfCaption));
      heightOfCaption = g.getFontMetrics().getAscent();
      System.out.println("height of text is: " + String.valueOf(heightOfCaption));
@@ -1915,7 +1924,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
         topX = image.getWidth()-widthOfCaption-smearFactor;
         System.out.println("The new x point is: " + String.valueOf(topX));
       }
-      if(topX < 0){topX = 1;}
+      if(topX < 0){topX = smearFactor-1;}
       if(topY > memeHeight){topY = memeHeight / 2;}
       //if(topY-fontSize-smearFactor+2 < 0){topY = ((int)(fontSize*alpha))+smearFactor-5;}
       if(topY-(((heightOfCaption)*(1-alpha))) < 0){
@@ -1949,7 +1958,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       // g.drawString(memeText, topX, topY-smearFactor);
       // g.setColor(fontColor);
       // g.drawString(memeText, topX, topY);
-      for(int i=0; i<90; i++){
+      for(double i=0; i<90; i=i+.25){
       g.setColor(fontSmearColor);
       g.drawString(memeText, (int)((topX+smearFactor*java.lang.Math.sin(i))), (int)(topY+smearFactor*java.lang.Math.cos(i)));
       g.setColor(fontSmearColor);
