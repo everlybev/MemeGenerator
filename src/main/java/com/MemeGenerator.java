@@ -1277,6 +1277,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
    //Yeah not really sure how to go from 112 to 15
    public int createTheMeme(String rawMeme) throws IOException{
     centered = false;
+    centeredY = false;
     red = 204;
     green = 204;
     blue = 255;
@@ -1320,7 +1321,8 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   sizeOfFont.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent e){
       String input = sizeOfFont.getText();
-      centered = true;
+      centered = false;
+      centeredY = false;
       sizeOfFont.setBackground(Color.WHITE);
       if(fontToggle == 0){
         sizeOfFont.setBackground(new ColorUIResource(204, 204, 255));
@@ -1356,6 +1358,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   caption.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent f){
       centered = false;
+      centeredY = false;
       memeText=caption.getText();
       Graphics g = image.getGraphics();
       g.setFont(g.getFont().deriveFont(fontSize));
@@ -1602,7 +1605,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   yBox.addActionListener(new ActionListener(){
     public void actionPerformed(ActionEvent y){
       String YString = yBox.getText();
-      //centered = false;
+      centeredY = false;
       yBox.setBackground(Color.WHITE);
       if(yToggle == 0){
         yBox.setBackground(new ColorUIResource(204, 204, 255));
