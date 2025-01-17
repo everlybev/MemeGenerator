@@ -1183,8 +1183,14 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public String addSpecialCharacters(String textOfMeme){
-    if (textOfMeme.contains("\\n")){ textOfMeme = textOfMeme.replaceAll("\\n", "\r\n");}
-    if (textOfMeme.contains("\\t")){ textOfMeme = textOfMeme.replaceAll("\\t", "    ");}
+    if (textOfMeme.contains("\\n")){ 
+      textOfMeme = textOfMeme.replace("\\n", "\r\n");
+      System.out.println("New line character detected.  New text is:\r\n" + textOfMeme);
+      }
+    if (textOfMeme.contains("\\t")){ 
+      textOfMeme = textOfMeme.replace("\\t", "    ");
+      System.out.println("Tab character detected.  New text is:\r\n" + textOfMeme);
+      }
     return textOfMeme;
   }
 
