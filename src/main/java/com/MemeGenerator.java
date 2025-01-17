@@ -1833,6 +1833,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       Color fontColor = new Color(red, green, blue);
       g.setColor(fontColor);
       numberOfNewLineCharacters = memeText.split("\\n", -1).length-1;
+      System.out.println("Number of new lines is:" + Integer.toString(numberOfNewLineCharacters));
       //for (int i=0; i<numberOfNewLineCharacters; i++){
       g.drawString(memeText, topX, topY);//+(i*(memeHeight+5)));
       //}
