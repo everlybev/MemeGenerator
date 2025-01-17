@@ -1833,9 +1833,9 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       Color fontColor = new Color(red, green, blue);
       g.setColor(fontColor);
       numberOfNewLineCharacters = memeText.split("\\n", -1).length-1;
-      for (int i=0; i<numberOfNewLineCharacters; i++){
-        g.drawString(memeText, topX, topY+(i*(memeHeight+5)));
-      }
+      //for (int i=0; i<numberOfNewLineCharacters; i++){
+      g.drawString(memeText, topX, topY);//+(i*(memeHeight+5)));
+      //}
       g.dispose();
       previewing = previewing + 1;
       try {
