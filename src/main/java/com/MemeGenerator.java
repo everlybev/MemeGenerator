@@ -1083,6 +1083,19 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
    }
  }
 
+ public  int stringOccurances(String majorString, String minorString){
+  int indexOfLoop = 0;
+  int theCount = 0;
+  while (indexOfLoop != -1) {
+    indexOfLoop = majorString.indexOf(minorString, indexOfLoop);
+    if (indexOfLoop != -1) {
+      theCount++;
+        indexOfLoop += minorString.length();
+    }
+}
+  return theCount;
+}
+
  public int CalculateSmearFactor(){
   smearFactor = 4;
   if(fontSize <= 41){smearFactor = 3;}
@@ -1832,10 +1845,11 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
       g.setColor(fontColor);
-      numberOfNewLineCharacters = memeText.split("\\n", -1).length-1;
+      numberOfNewLineCharacters = stringOccurances(memeText, "\\n");
       System.out.println("Number of new lines is: " + Integer.toString(numberOfNewLineCharacters));
       for (int i=0; i<numberOfNewLineCharacters; i++){
         g.drawString(memeText, topX, topY+(i*(memeHeight+5)));
+        System.out.println("Number of drawStrings is: " + Integer.toString(i+1));
       }
       g.dispose();
       previewing = previewing + 1;
