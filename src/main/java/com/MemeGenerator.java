@@ -1845,12 +1845,22 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
       g.setColor(fontColor);
-      numberOfNewLineCharacters = stringOccurances(memeText, "\\n");
-      System.out.println("Number of new lines is: " + Integer.toString(numberOfNewLineCharacters));
-      for (int i=0; i<numberOfNewLineCharacters; i++){
-        g.drawString(memeText, topX, topY+(i*(memeHeight+5)));
-        System.out.println("Number of drawStrings is: " + Integer.toString(i+1));
-      }
+      // numberOfNewLineCharacters = stringOccurances(memeText, "<n>");
+      // System.out.println("Number of new lines is: " + Integer.toString(numberOfNewLineCharacters));
+      // if (numberOfNewLineCharacters > 0){
+      // for (int i=0; i<=numberOfNewLineCharacters; i++){
+      //   int yLocation;
+      //   int xLocation;
+      //   int correctionVal;
+      //   String[] memeTextArr = memeText.split("<n>");
+      //   System.out.println("memeTextArr[i] is: " + memeTextArr[i]);
+      //   correctionVal = (int) (((numberOfNewLineCharacters)*heightOfCaption))/2;
+      //   xLocation = topX + g.getFontMetrics().stringWidth(memeTextArr[i]);
+      //   yLocation = topY+(i*(heightOfCaption))-correctionVal;
+      //   g.drawString(memeTextArr[i], xLocation, yLocation);
+      //   System.out.println("Number of drawStrings is: " + Integer.toString(i+1));
+      // }}
+      g.drawString(memeText, topX, topY);
       g.dispose();
       previewing = previewing + 1;
       try {
