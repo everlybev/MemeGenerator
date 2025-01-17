@@ -51,6 +51,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   JButton close;
   JButton submit;
   JButton theInstructions;
+  int numberOfNewLineCharacters;
   JFrame preMeme;
   JLabel welcomeLabel;
   JLabel memesMadeLabel;
@@ -1183,10 +1184,10 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
   }
 
   public String addSpecialCharacters(String textOfMeme){
-    if (textOfMeme.contains("\\n")){ 
-      textOfMeme = textOfMeme.replace("\\n", "\r\n");
-      System.out.println("New line character detected.  New text is:\r\n" + textOfMeme);
-      }
+    // if (textOfMeme.contains("\\n")){ 
+    //   textOfMeme = textOfMeme.replace("\\n", "\r\n");
+    //   System.out.println("New line character detected.  New text is:\r\n" + textOfMeme);
+    //   }
     if (textOfMeme.contains("\\t")){ 
       textOfMeme = textOfMeme.replace("\\t", "    ");
       System.out.println("Tab character detected.  New text is:\r\n" + textOfMeme);
@@ -1298,6 +1299,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     blueSmear = 51;
     topX = 1;
     topY = 1;
+    numberOfNewLineCharacters = 0;
     fontSize = 1;
     memeText = "";
     newMemeFileName = "default";
@@ -1830,7 +1832,10 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       g.setFont(g.getFont().deriveFont(fontSize));
       Color fontColor = new Color(red, green, blue);
       g.setColor(fontColor);
-      g.drawString(memeText, topX, topY);
+      numberOfNewLineCharacters = memeText.split("\\n", -1).length-1;
+      for (int i=0; i<numberOfNewLineCharacters; i++){
+        g.drawString(memeText, topX, topY+(i*(memeHeight+5)));
+      }
       g.dispose();
       previewing = previewing + 1;
       try {
