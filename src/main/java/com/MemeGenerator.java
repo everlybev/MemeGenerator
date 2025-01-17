@@ -1182,6 +1182,12 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
     }
   }
 
+  public String addSpecialCharacters(String textOfMeme){
+    if (textOfMeme.contains("\\n")){ textOfMeme = textOfMeme.replaceAll("\\n", "\r\n");}
+    if (textOfMeme.contains("\\t")){ textOfMeme = textOfMeme.replaceAll("\\t", "    ");}
+    return textOfMeme;
+  }
+
   public boolean isAnImage(String theFileName){
     try {
       if (theFileName.length() - theFileName.replaceAll("\\.","").length() == 1){
@@ -1360,6 +1366,7 @@ public class MemeGenerator extends javax.swing.JFrame implements ActionListener
       centered = false;
       centeredY = false;
       memeText=caption.getText();
+      memeText = addSpecialCharacters(memeText);
       Graphics g = image.getGraphics();
       g.setFont(g.getFont().deriveFont(fontSize));
       widthOfCaption = g.getFontMetrics().stringWidth(memeText);
